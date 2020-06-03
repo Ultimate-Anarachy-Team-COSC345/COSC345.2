@@ -31,6 +31,8 @@ class GameScene: SKScene {
         playerSprite.position = CGPoint(x:frame.midX ,y:frame.minY + playerSprite.size.height)
         // Makes playertexture a physics body
         playerSprite.physicsBody = SKPhysicsBody(texture: playerTexture, size: CGSize(width: playerSprite.size.width, height: playerSprite.size.height))
+        // No player gravity, map is top down.
+        playerSprite.physicsBody?.affectedByGravity = false
         // Adds player to the scene
         addChild(playerSprite)
         
@@ -81,10 +83,8 @@ class GameScene: SKScene {
                 }
                 // PlayerSprite rotation matches position of joystick
                 playerSprite.zRotation = angle - 1.57079633
-                // Player moves by fraction of vector "v" from joystick
-                let playerMove:SKAction = SKAction.move(by: v, duration:1)
-                playerSprite.run(playerMove)
-                
+                // Moves player by applying force equal to the vector of the joystick.
+                playerSprite.physicsBody?.applyForce(v)
             } // Ends stickactive test
         }
     }
@@ -97,11 +97,13 @@ class GameScene: SKScene {
             elasticJoy.timingMode = .easeOut
             
             ball.run(elasticJoy)
-            
+            // Stops player movement when screen is no longer being touched
+            playerSprite.physicsBody?.velocity = CGVector(dx: 0,dy: 0)
         }
         
     }
 }
+
 
 
 
