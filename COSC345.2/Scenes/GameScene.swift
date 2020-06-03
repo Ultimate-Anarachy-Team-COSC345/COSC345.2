@@ -6,11 +6,11 @@
 //
 
 import SpriteKit
-import GameController
 
 class GameScene: SKScene {
     let base = SKSpriteNode(imageNamed:"jSubstrate")
     let ball = SKSpriteNode(imageNamed:"jStick")
+    let playerTexture = SKTexture(imageNamed: "PlaceholderPlayer")
     var playerSprite : SKSpriteNode!
     // Variable that indicates if the user has moved the joystick
     var stickActive:Bool = false
@@ -23,10 +23,17 @@ class GameScene: SKScene {
         // Sets background colour using RGB values
         backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
         // Adds playerSprite from file using named image, sets position to bottom centre of screen, sets size of sprite.
-        playerSprite = SKSpriteNode(imageNamed:"PlaceholderPlayer")
+        // Initialises node with player texture
+        playerSprite = SKSpriteNode(texture: playerTexture)
+        // Sets player size
         playerSprite.size = CGSize(width: 50, height: 50)
+        // Sets player position
         playerSprite.position = CGPoint(x:frame.midX ,y:frame.minY + playerSprite.size.height)
+        // Makes playertexture a physics body
+        playerSprite.physicsBody = SKPhysicsBody(texture: playerTexture, size: CGSize(width: playerSprite.size.width, height: playerSprite.size.height))
+        // Adds player to the scene
         addChild(playerSprite)
+        
         // Adds base of joystick
         base.position = CGPoint(x:frame.minX + base.size.width, y:frame.minY + base.size.height)
         //base.alpha = 0.4
@@ -59,13 +66,9 @@ class GameScene: SKScene {
             // Checks if user is touching joystick before activating joystick
             if (stickActive) {
                 let v = CGVector(dx: location.x - base.position.x, dy:location.y - base.position.y)
+                // Converts vector "v" to an angle in radians
                 let angle = atan2(v.dy, v.dx)
-                
-                let deg = angle * CGFloat(180/Double.pi)
-                print(deg + 180)
-                
                 let length:CGFloat = base.frame.size.height / 2
-                
                 let xDist:CGFloat = sin(angle - 1.57079633) * length
                 let yDist:CGFloat = cos(angle - 1.57079633) * length
                 
@@ -79,7 +82,7 @@ class GameScene: SKScene {
                 // PlayerSprite rotation matches position of joystick
                 playerSprite.zRotation = angle - 1.57079633
                 // Player moves by fraction of vector "v" from joystick
-                let playerMove:SKAction = SKAction.move(by: v, duration:0.1)
+                let playerMove:SKAction = SKAction.move(by: v, duration:1)
                 playerSprite.run(playerMove)
                 
             } // Ends stickactive test
@@ -99,6 +102,7 @@ class GameScene: SKScene {
         
     }
 }
+
 
 
 
