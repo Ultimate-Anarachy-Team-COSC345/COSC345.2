@@ -2,8 +2,7 @@
 //  GameScene.swift
 //  COSC345.2
 //
-//  Created by makayla montgomery on 8/05/20.
-//  Copyright © 2020 makayla montgomery. All rights reserved.
+//  Authors: Makoto McLennan, Brittany Duncan, Kayla Montgomery 2020
 //
 
 import SpriteKit
@@ -54,6 +53,7 @@ class GameScene: SKScene {
     // Function containing methods for touches
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Touches method for joystick tracking
+        // For loop checks for screen touches.
         for touch in (touches) {
             let location = touch.location(in: self)
             // Checks if user is touching joystick before activating joystick
@@ -76,6 +76,12 @@ class GameScene: SKScene {
                     // Lets ball track touches from outside the joystick without letting ball move away from joystick pad
                     ball.position = CGPoint(x:base.position.x - xDist, y:base.position.y + yDist)
                 }
+                // PlayerSprite rotation matches position of joystick
+                playerSprite.zRotation = angle - 1.57079633
+                // Player moves by fraction of vector "v" from joystick
+                let playerMove:SKAction = SKAction.move(by: v, duration:0.1)
+                playerSprite.run(playerMove)
+                
             } // Ends stickactive test
         }
     }
