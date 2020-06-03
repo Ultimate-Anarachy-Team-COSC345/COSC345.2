@@ -32,11 +32,13 @@ class GameScene: SKScene {
         addChild(base)
         // Adds joystick
         ball.position = CGPoint(x:frame.minX + base.size.width, y:frame.minY + base.size.height)
+        ball.zPosition = 1
         //ball.alpha = 0.4
         addChild(ball)
         
     }
-    override func touchesMoved(touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // Touches method for joystick tracking
         for touch in (touches as! Set<UITouch>) {
             let location = touch.location(in: self)
             let v = CGVector(dx: location.x - base.position.x, dy:location.y - base.position.y)
@@ -45,10 +47,23 @@ class GameScene: SKScene {
             let deg = angle * CGFloat(180/Double.pi)
             print(deg + 180)
             
+            let length:CGFloat = base.frame.size.height / 2
             
+            let xDist:CGFloat = sin(angle - 1.57079633) * length
+            let yDist:CGFloat = cos(angle - 1.57079633) * length
+            
+            // Lets ball follow touches within frame of joystick
+            if (base.frame.contains(location)) {
+                ball.position = location
+            }else {
+                // Lets ball track touches from outside the joystick without letting ball move away from joystick pad
+                ball.position = CGPoint(x:base.position.x - xDist, y:base.position.y + yDist)
+                
+            }
         }
     }
 }
+
 
 
 
