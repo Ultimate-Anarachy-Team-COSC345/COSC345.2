@@ -15,6 +15,14 @@ class GameScene: SKScene {
     // Variable that indicates if the user has moved the joystick
     var stickActive:Bool = false
     
+    var label = SKLabelNode(fontNamed: "ArialMT")
+    
+    var score: Int = 0 {
+        didSet {
+            label.text = "Score: \(score)"
+        }
+    }
+            
     override func sceneDidLoad() {
         // Calls method to load scene elements
         layoutScene()
@@ -45,6 +53,14 @@ class GameScene: SKScene {
         ball.zPosition = 1
         //ball.alpha = 0.4
         addChild(ball)
+        
+        label.fontColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        label.fontSize = 24
+        label.text = "Score: \(score)"
+        //Place the label in upper left corner of the screen
+        label.position = CGPoint()
+        label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        addChild(label)
         
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -103,6 +119,9 @@ class GameScene: SKScene {
         
     }
 }
+
+
+
 
 
 

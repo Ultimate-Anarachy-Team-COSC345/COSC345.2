@@ -15,7 +15,7 @@
 		5AC92C0B2464B6A200865698 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC92C092464B6A200865698 /* LaunchScreen.storyboard */; };
 		5AC92C162464B6A200865698 /* COSC345_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92C152464B6A200865698 /* COSC345_2Tests.swift */; };
 		5AC92C212464B6A200865698 /* COSC345_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92C202464B6A200865698 /* COSC345_2UITests.swift */; };
-		960B0CE82488969C0074EB6F /* Brit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960B0CE72488969C0074EB6F /* Brit.swift */; };
+		5C404F682488A5C900E82DCA /* Brit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960B0CE72488969C0074EB6F /* Brit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +113,7 @@
 		5AC92C142464B6A200865698 /* COSC345.2Tests */ = {
 			isa = PBXGroup;
 			children = (
+				960B0CE72488969C0074EB6F /* Brit.swift */,
 				5AC92C152464B6A200865698 /* COSC345_2Tests.swift */,
 				5AC92C172464B6A200865698 /* Info.plist */,
 			);
@@ -132,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				5AC92C002464B6A200865698 /* GameScene.swift */,
-				960B0CE72488969C0074EB6F /* Brit.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -299,7 +299,6 @@
 			files = (
 				5AC92C012464B6A200865698 /* GameScene.swift in Sources */,
 				5AC92C032464B6A200865698 /* GameViewController.swift in Sources */,
-				960B0CE82488969C0074EB6F /* Brit.swift in Sources */,
 				5AC92BFB2464B6A200865698 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C404F682488A5C900E82DCA /* Brit.swift in Sources */,
 				5AC92C162464B6A200865698 /* COSC345_2Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,7 +409,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -459,7 +459,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

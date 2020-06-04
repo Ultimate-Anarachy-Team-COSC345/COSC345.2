@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class Brit: SKScene {
     
     var label = SKLabelNode(fontNamed: "ArialMT")
     
