@@ -15,6 +15,7 @@
 		5AC92C0B2464B6A200865698 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC92C092464B6A200865698 /* LaunchScreen.storyboard */; };
 		5AC92C162464B6A200865698 /* COSC345_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92C152464B6A200865698 /* COSC345_2Tests.swift */; };
 		5AC92C212464B6A200865698 /* COSC345_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92C202464B6A200865698 /* COSC345_2UITests.swift */; };
+		960B0CE82488969C0074EB6F /* Brit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960B0CE72488969C0074EB6F /* Brit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		5AC92C1C2464B6A200865698 /* COSC345.2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = COSC345.2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC92C202464B6A200865698 /* COSC345_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COSC345_2UITests.swift; sourceTree = "<group>"; };
 		5AC92C222464B6A200865698 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		960B0CE72488969C0074EB6F /* Brit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				5AC92C002464B6A200865698 /* GameScene.swift */,
+				960B0CE72488969C0074EB6F /* Brit.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 			files = (
 				5AC92C012464B6A200865698 /* GameScene.swift in Sources */,
 				5AC92C032464B6A200865698 /* GameViewController.swift in Sources */,
+				960B0CE82488969C0074EB6F /* Brit.swift in Sources */,
 				5AC92BFB2464B6A200865698 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
