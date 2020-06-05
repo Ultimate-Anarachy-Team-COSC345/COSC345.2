@@ -18,7 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var blinkyIsMoving = false
     var blinkyIndex = 0
-    let pathSquare = UIBezierPath(rect: CGRect(x: -75, y: -75, width: 150, height: 150))
+    let pathSquare = UIBezierPath(rect: CGRect(x:100, y:250, width: 150, height: 150))
     
     // Objects for joystick
     let base = SKSpriteNode(imageNamed:"jSubstrate")
@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func blinkyMove () {
         print(blinkyIndex)
-        let blinkyPath = SKAction.repeatForever(SKAction.follow(pathSquare.cgPath, asOffset: true, orientToPath: false, duration: 5))
+        let blinkyPath = SKAction.repeatForever(SKAction.follow(pathSquare.cgPath, asOffset: false, orientToPath: false, duration: 5))
         npc.run(blinkyPath)
     }
     // Enemy objects
