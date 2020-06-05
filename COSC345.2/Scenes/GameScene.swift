@@ -18,8 +18,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var blinkyIsMoving = false
     var blinkyIndex = 0
-    var blinkyPoints = [CGPoint] (arrayLiteral: CGPoint(x: -30, y: 30), CGPoint(x: 30, y: 30),
-                                  CGPoint(x: 30, y: -30), CGPoint(x: -30, y: -30))
+    let pathSquare = UIBezierPath(rect: CGRect(x: -75, y: -75, width: 150, height: 150))
+    
     // Objects for joystick
     let base = SKSpriteNode(imageNamed:"jSubstrate")
     let ball = SKSpriteNode(imageNamed:"jStick")
@@ -38,15 +38,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             label.text = "Score: \(score)"
         }
     }
-    func blinkyMove (point:CGPoint) {
-        let blinkyPath = SKAction.move(to: point, duration: 3)
+    func blinkyMove () {
+        print(blinkyIndex)
+        let blinkyPath = SKAction.repeatForever(SKAction.follow(pathSquare.cgPath, asOffset: true, orientToPath: false, duration: 5))
         npc.run(blinkyPath)
-        blinkyIsMoving = false
-        if blinkyIndex == (blinkyPoints.count-1) {
-            blinkyIndex = 0
-        } else {
-            blinkyIndex += 1
-        }
     }
     // Enemy objects
     let npcTexture = SKTexture(imageNamed: "blinky")
@@ -65,6 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func sceneDidLoad() {
         // Calls method to load scene elements
         layoutScene()
+        blinkyMove()
     }
     
     
@@ -244,15 +240,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .Right:
                 let move = SKAction.moveBy(x: player.speed, y: 0.0, duration: 0.1)
                 player.run(move)
-                
             }
         }
-        if blinkyIsMoving == false {
-            blinkyIsMoving = true
-            blinkyMove(point: blinkyPoints[blinkyIndex])
-        }
     }
-    
 }
 
 
