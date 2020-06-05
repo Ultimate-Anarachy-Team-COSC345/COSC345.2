@@ -16,6 +16,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     lazy var direction = Direction.Right
     
+    var blinkyIsMoving = false
+    var blinkyIndex = 0
+    var blinkyPoints = [CGPoint] (arrayLiteral: CGPoint(x: -30, y: 30), CGPoint(x: 30, y: 30),
+                                  CGPoint(x: 30, y: -30), CGPoint(x: -30, y: -30))
     // Objects for joystick
     let base = SKSpriteNode(imageNamed:"jSubstrate")
     let ball = SKSpriteNode(imageNamed:"jStick")
@@ -34,12 +38,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             label.text = "Score: \(score)"
         }
     }
-    
+    func blinkyMove (point:CGPoint) {
+        let blinkyPath = SKAction.move(to: point, duration: 3)
+        npc.run(blinkyPath)
+        blinkyIsMoving = false
+        if blinkyIndex == (blinkyPoints.count-1) {
+            blinkyIndex = 0
+        } else {
+            blinkyIndex += 1
+        }
+    }
     // Enemy objects
     let npcTexture = SKTexture(imageNamed: "blinky")
     var npc : SKSpriteNode!
     
-    //Pick up objects
+    // Pick up objects
     let carrotTexture = SKTexture(imageNamed: "carrot")
     var carrot : SKSpriteNode!
     
@@ -71,12 +84,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // No player gravity, map is top down.
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.isDynamic = true
+        player.physicsBody?.allowsRotation = false
         // Tells player node to detect all collisions and record all as contacts
         player.physicsBody?.contactTestBitMask = player.physicsBody?.collisionBitMask ?? 0
         player.name = "player"
         player.speed = 5.0
         // Adds player to the scene
         addChild(player)
+        
         // Adds base of joystick
         base.position = CGPoint(x:frame.minX + base.size.width, y:frame.minY + base.size.height)
         //base.alpha = 0.4
@@ -108,9 +123,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         npc.speed = 3.0
         addChild(npc)
         
+        // carrot implementation
         carrot = SKSpriteNode(texture: carrotTexture)
         carrot.size = CGSize(width: 50, height:50)
         carrot.position = CGPoint(x: frame.minX + carrot.size.height, y: frame.maxY - carrot.size.height/2)
+        carrot.physicsBody = SKPhysicsBody(circleOfRadius: carrot.size.width/2)
+        carrot.physicsBody?.affectedByGravity = false
+        carrot.physicsBody?.isDynamic = false
         addChild(carrot)
     }
     
@@ -151,22 +170,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 // player rotation matches position of joystick
                 switch (angle) {
-                    // Facing Up
+                // Facing Up
                 case (0.25 * .pi)...(0.75 * .pi):
                     player.zRotation = 0.0
                     direction = .Up
                     break
-                    // Facing Down
+                // Facing Down
                 case (-0.75 * .pi)...(-0.25 * .pi):
                     player.zRotation = .pi
                     direction = .Down
                     break
-                    // Facing Right
+                // Facing Right
                 case (-0.25 * .pi)...(0.25 * .pi):
                     player.zRotation = .pi/2
                     direction = .Right
                     break
-                    // Facing Left
+                // Facing Left
                 case (-1.25 * .pi)...(1.25 * .pi):
                     player.zRotation = .pi / -2
                     direction = .Left
@@ -228,9 +247,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
             }
         }
+        if blinkyIsMoving == false {
+            blinkyIsMoving = true
+            blinkyMove(point: blinkyPoints[blinkyIndex])
+        }
     }
     
 }
+
+
 
 
 
