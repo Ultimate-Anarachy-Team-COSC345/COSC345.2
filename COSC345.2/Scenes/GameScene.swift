@@ -8,6 +8,14 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    enum Direction {
+        case Up
+        case Down
+        case Left
+        case Right
+    }
+    lazy var direction = Direction.Right
+    
     // Objects for joystick
     let base = SKSpriteNode(imageNamed:"jSubstrate")
     let ball = SKSpriteNode(imageNamed:"jStick")
@@ -17,7 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Player objects
     let playerTexture = SKTexture(imageNamed: "PlaceholderPlayer")
     var player : SKSpriteNode!
-    var playerFacing = 0
+    var playerIsMoving: Bool = false
     
     // Score Display objects
     var label = SKLabelNode(fontNamed: "ArialMT")
@@ -62,7 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Tells player node to detect all collisions and record all as contacts
         player.physicsBody?.contactTestBitMask = player.physicsBody?.collisionBitMask ?? 0
         player.name = "player"
-        player.speed = 3.0
+        player.speed = 5.0
         // Adds player to the scene
         addChild(player)
         // Adds base of joystick
@@ -118,6 +126,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.location(in: self)
             // Checks if user is touching joystick before activating joystick
             if (stickActive) {
+                playerIsMoving = true
                 let v = CGVector(dx: location.x - base.position.x, dy:location.y - base.position.y)
                 // Converts vector "v" to an angle in radians
                 let angle = atan2(v.dy, v.dx)
@@ -133,7 +142,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     ball.position = CGPoint(x:base.position.x - xDist, y:base.position.y + yDist)
                 }
                 // player rotation matches position of joystick
-                
+                switch (angle) {
+                    // Facing Up
+                case (0.25 * .pi)...(0.75 * .pi):
+                    player.zRotation = 0.0
+                    direction = .Up
+                    break
+                    // Facing Down
+                case (-0.75 * .pi)...(-0.25 * .pi):
+                    player.zRotation = .pi
+                    direction = .Down
+                    break
+                    // Facing Right
+                case (-0.25 * .pi)...(0.25 * .pi):
+                    player.zRotation = .pi/2
+                    direction = .Right
+                    break
+                    // Facing Left
+                case (-1.25 * .pi)...(1.25 * .pi):
+                    player.zRotation = .pi / -2
+                    direction = .Left
+                    break
+                default:
+                    return
+                }
             } // Ends stickactive test
         }
     }
@@ -147,7 +179,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             ball.run(elasticJoy)
             // Stops player movement when screen is no longer being touched
-            player.physicsBody?.velocity = CGVector(dx: 0,dy: 0)
+            playerIsMoving = false
         }
     }
     
@@ -171,10 +203,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     // Called before each frame is rendered
     override func update(_ currentTime: TimeInterval) {
-        
+        if playerIsMoving {
+            switch (direction) {
+            case .Up:
+                let move = SKAction.moveBy(x: 0.0, y: player.speed, duration: 0.1)
+                player.run(move)
+            case .Down:
+                let move = SKAction.moveBy(x: 0.0, y: -player.speed, duration: 0.1)
+                player.run(move)
+            case .Left:
+                let move = SKAction.moveBy(x: -player.speed, y: 0.0, duration: 0.1)
+                player.run(move)
+            case .Right:
+                let move = SKAction.moveBy(x: player.speed, y: 0.0, duration: 0.1)
+                player.run(move)
+                
+            }
+        }
     }
     
 }
+
 
 
 
