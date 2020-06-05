@@ -26,6 +26,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Variable that indicates if the user has moved the joystick
     var stickActive:Bool = false
     
+    // a & b Buttons
+    let aButton = SKSpriteNode(imageNamed:"buttonA")
+    let bButton = SKSpriteNode(imageNamed:"buttonB")
+    var aPushed:Bool = false
+    var bPushed:Bool = false
+    var shouldDash:Bool = false
+    //var dashTouch :UITouch
     // Player objects
     let playerTexture = SKTexture(imageNamed: "PlaceholderPlayer")
     var player : SKSpriteNode!
@@ -127,6 +134,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         carrot.physicsBody?.affectedByGravity = false
         carrot.physicsBody?.isDynamic = false
         addChild(carrot)
+        
+        //Add buttons
+        aButton.position = CGPoint(x:frame.maxX - (aButton.size.width*1.5), y:60 + aButton.size.height)
+        addChild(aButton)
+        bButton.position = CGPoint(x:frame.maxX - (bButton.size.width-30), y:80 + bButton.size.height)
+        addChild(bButton)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -138,6 +151,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             } else {
                 stickActive = false
             }
+            if (self.bButton.frame.contains(location)) {
+                self.shouldDash = true;
+                //self.dashTouch = touch;
+                self.bButton.alpha = 0.7;
+            }
+            //3
+            if (self.aButton.frame.contains(location)) {
+                self.aPushed = true;
+                self.aButton.alpha = 0.7;
+            }
         }
     }
     
@@ -146,6 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Touches method for joystick tracking
         // For loop checks for screen touches.
         for touch in (touches) {
+            let previousTouchLocation = touch.previousLocation(in: self)
             let location = touch.location(in: self)
             // Checks if user is touching joystick before activating joystick
             if (stickActive) {
@@ -189,6 +213,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 default:
                     return
                 }
+                //if the buttons are touched
+                if (aButton.frame.contains(previousTouchLocation) && (!aButton.frame.contains(location)) ) {
+                    self.aPushed = false;
+                    self.aButton.alpha = 1.0;
+                }
+                if (!aButton.frame.contains(previousTouchLocation) && (aButton.frame.contains(location)) ) {
+                    self.aPushed = true;
+                    self.aButton.alpha = 0.7;
+                }
             } // Ends stickactive test
         }
     }
@@ -204,6 +237,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Stops player movement when screen is no longer being touched
             playerIsMoving = false
         }
+        for touch in (touches) {
+            let touchLocation = touch.location(in: self)
+            if (self.aButton.frame.contains(touchLocation)) {
+                self.aPushed = false;
+                self.aButton.alpha = 1.0;
+            }
+            if (self.bButton.frame.contains(touchLocation)) {
+                self.bPushed = false;
+                self.bButton.alpha = 1.0;
+            }
+        }
+
     }
     
     func collision(between player: SKNode, object: SKNode) {
