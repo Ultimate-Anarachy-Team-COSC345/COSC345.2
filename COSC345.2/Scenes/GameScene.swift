@@ -39,6 +39,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let npcTexture = SKTexture(imageNamed: "blinky")
     var npc : SKSpriteNode!
     
+    //Pick up objects
+    let carrotTexture = SKTexture(imageNamed: "carrot")
+    var carrot : SKSpriteNode!
+    
     override func didMove(to view: SKView) {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
@@ -104,6 +108,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         npc.speed = 3.0
         addChild(npc)
         
+        carrot = SKSpriteNode(texture: carrotTexture)
+        carrot.size = CGSize(width: 50, height:50)
+        carrot.position = CGPoint(x: frame.minX + carrot.size.height, y: frame.maxY - carrot.size.height/2)
+        addChild(carrot)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
