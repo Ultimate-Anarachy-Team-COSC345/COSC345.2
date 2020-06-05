@@ -7,43 +7,64 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    // Objects for joystick
     let base = SKSpriteNode(imageNamed:"jSubstrate")
     let ball = SKSpriteNode(imageNamed:"jStick")
-    let playerTexture = SKTexture(imageNamed: "PlaceholderPlayer")
-    var playerSprite : SKSpriteNode!
     // Variable that indicates if the user has moved the joystick
     var stickActive:Bool = false
     
-    var label = SKLabelNode(fontNamed: "ArialMT")
+    // Player objects
+    let playerTexture = SKTexture(imageNamed: "PlaceholderPlayer")
+    var player : SKSpriteNode!
+    var playerFacing = 0
     
+    // Score Display objects
+    var label = SKLabelNode(fontNamed: "ArialMT")
     var score: Int = 0 {
         didSet {
             label.text = "Score: \(score)"
         }
     }
-            
+    
+    // Enemy objects
+    let npcTexture = SKTexture(imageNamed: "blinky")
+    var npc : SKSpriteNode!
+    
+    override func didMove(to view: SKView) {
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        physicsWorld.contactDelegate = self
+    }
+    
+    // Called on app start
     override func sceneDidLoad() {
         // Calls method to load scene elements
         layoutScene()
     }
+    
+    
     func layoutScene() {
         // Sets background colour using RGB values
         backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
-        // Adds playerSprite from file using named image, sets position to bottom centre of screen, sets size of sprite.
-        // Initialises node with player texture
-        playerSprite = SKSpriteNode(texture: playerTexture)
-        // Sets player size
-        playerSprite.size = CGSize(width: 50, height: 50)
-        // Sets player position
-        playerSprite.position = CGPoint(x:frame.midX ,y:frame.minY + playerSprite.size.height)
-        // Makes playertexture a physics body
-        playerSprite.physicsBody = SKPhysicsBody(texture: playerTexture, size: CGSize(width: playerSprite.size.width, height: playerSprite.size.height))
-        // No player gravity, map is top down.
-        playerSprite.physicsBody?.affectedByGravity = false
-        // Adds player to the scene
-        addChild(playerSprite)
         
+        // Adds player from file using named image, sets position to bottom centre of screen, sets size of sprite.
+        // Initialises node with player texture
+        player = SKSpriteNode(texture: playerTexture)
+        // Sets player size
+        player.size = CGSize(width: 50, height: 50)
+        // Sets player position
+        player.position = CGPoint(x:frame.midX ,y:frame.minY + player.size.height)
+        // Makes playertexture a physics body
+        player.physicsBody = SKPhysicsBody(texture: playerTexture, size: player.size)
+        // No player gravity, map is top down.
+        player.physicsBody?.affectedByGravity = false
+        player.physicsBody?.isDynamic = true
+        // Tells player node to detect all collisions and record all as contacts
+        player.physicsBody?.contactTestBitMask = player.physicsBody?.collisionBitMask ?? 0
+        player.name = "player"
+        player.speed = 3.0
+        // Adds player to the scene
+        addChild(player)
         // Adds base of joystick
         base.position = CGPoint(x:frame.minX + base.size.width, y:frame.minY + base.size.height)
         //base.alpha = 0.4
@@ -62,7 +83,21 @@ class GameScene: SKScene {
         label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         addChild(label)
         
+        // Adds npc to scene.. Move to own method later to add multiple npc's recursively
+        npc = SKSpriteNode(texture: npcTexture)
+        npc.size = CGSize(width: 50, height: 50)
+        npc.position = CGPoint(x: frame.midX, y: frame.midY)
+        //npc.physicsBody = SKPhysicsBody(texture: npcTexture, size: npc.size)
+        npc.physicsBody = SKPhysicsBody(circleOfRadius: npc.size.width/2)
+        npc.physicsBody?.affectedByGravity = false
+        npc.physicsBody?.isDynamic = false
+        npc.physicsBody?.contactTestBitMask = npc.physicsBody?.collisionBitMask ?? 0
+        npc.name = "blinky"
+        npc.speed = 3.0
+        addChild(npc)
+        
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Called when touches begin
         for touch in (touches){
@@ -87,8 +122,8 @@ class GameScene: SKScene {
                 // Converts vector "v" to an angle in radians
                 let angle = atan2(v.dy, v.dx)
                 let length:CGFloat = base.frame.size.height / 2
-                let xDist:CGFloat = sin(angle - 1.57079633) * length
-                let yDist:CGFloat = cos(angle - 1.57079633) * length
+                let xDist:CGFloat = sin(angle-CGFloat(0.5 * .pi)) * length
+                let yDist:CGFloat = cos(angle-CGFloat(0.5 * .pi)) * length
                 
                 // Lets ball follow touches within frame of joystick
                 if (base.frame.contains(location)) {
@@ -97,10 +132,8 @@ class GameScene: SKScene {
                     // Lets ball track touches from outside the joystick without letting ball move away from joystick pad
                     ball.position = CGPoint(x:base.position.x - xDist, y:base.position.y + yDist)
                 }
-                // PlayerSprite rotation matches position of joystick
-                playerSprite.zRotation = angle - 1.57079633
-                // Moves player by applying force equal to the vector of the joystick.
-                playerSprite.physicsBody?.applyForce(v)
+                // player rotation matches position of joystick
+                
             } // Ends stickactive test
         }
     }
@@ -114,10 +147,33 @@ class GameScene: SKScene {
             
             ball.run(elasticJoy)
             // Stops player movement when screen is no longer being touched
-            playerSprite.physicsBody?.velocity = CGVector(dx: 0,dy: 0)
+            player.physicsBody?.velocity = CGVector(dx: 0,dy: 0)
         }
+    }
+    
+    func collision(between player: SKNode, object: SKNode) {
+        if object.name == "blinky" {
+            player.removeFromParent()
+        }
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node?.name == "player" {
+            collision(between: contact.bodyB.node!, object: contact.bodyA.node!)
+        } else if contact.bodyB.node?.name == "player" {
+            collision(between: contact.bodyA.node!, object: contact.bodyB.node!)
+        }
+        if contact.bodyA.node?.name == "blinky" {
+            collision(between: contact.bodyB.node!, object: contact.bodyA.node!)
+        } else if contact.bodyB.node?.name == "blinky" {
+            collision(between: contact.bodyA.node!, object: contact.bodyB.node!)
+        }
+    }
+    // Called before each frame is rendered
+    override func update(_ currentTime: TimeInterval) {
         
     }
+    
 }
 
 
