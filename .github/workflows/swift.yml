@@ -1,0 +1,20 @@
+name: Swift
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: xcodebuild clean test -project 345.2.xcodeproj -scheme 345.2 -destination "platform=iOS Simulator,name=iPhone 8 Plus"
+#       run: swift build -v
+#     - name: Run tests
+#       run: swift test -v
