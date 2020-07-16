@@ -2,18 +2,18 @@ name: CodeCov
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
   pull_request:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
   build:
-  
+
     runs-on: macos-latest
-    
+
     steps:
     - uses: actions/checkout@v2
     - name: Xcode build test
-      run: |
-        xcodebuild clean test -project COSC345.2.xcodeproj -scheme COSC345.2 -destination "platform=iOS Simulator,name=iPhone 8 Plus" -enableCodeCoverage YES |
+      run: | 
+        xcodebuild clean test -project COSC345.2.xcodeproj -scheme COSC345.2 -destination "platform=iOS Simulator,name=iPhone 8 Plus" -enableCodeCoverage YES | xcpretty -c
         bash <(curl -s https://codecov.io/bash)
