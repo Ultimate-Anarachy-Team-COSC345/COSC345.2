@@ -1,4 +1,4 @@
-name:
+name: CodeCov
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-latest
     
     steps:
-    - uses: actions/checkout@V2
+    - uses: actions/checkout@v2
     - name: Xcode build test
       run: |
         xcodebuild clean test -project COSC345.2.xcodeproj -scheme COSC345.2 -destination "platform=iOS Simulator,name=iPhone 8 Plus" -enableCodeCoverage YES |
