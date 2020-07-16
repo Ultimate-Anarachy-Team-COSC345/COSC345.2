@@ -269,7 +269,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             collision(between: contact.bodyA.node!, object: contact.bodyB.node!)
         }
     }
-    // Called before each frame is rendered
+    /**
+     - Parameters:
+        - currentTime: current time system to update the movement
+     */
     override func update(_ currentTime: TimeInterval) {
         if playerIsMoving {
             switch (direction) {

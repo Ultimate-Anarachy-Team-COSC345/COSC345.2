@@ -31,6 +31,7 @@ class COSC345_2Tests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+        
     }
     
 }
