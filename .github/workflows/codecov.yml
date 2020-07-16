@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - name: Xcode build test
-      run: | 
+    - name: codecov
+      run: |
         xcodebuild clean test -project COSC345.2.xcodeproj -scheme COSC345.2 -destination "platform=iOS Simulator,name=iPhone 8 Plus" -enableCodeCoverage YES | xcpretty -c
         bash <(curl -s https://codecov.io/bash)
