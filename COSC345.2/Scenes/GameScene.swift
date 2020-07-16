@@ -141,7 +141,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bButton.position = CGPoint(x:frame.maxX - (bButton.size.width-30), y:80 + bButton.size.height)
         addChild(bButton)
     }
-    
+    /**
+ - Paramters:
+ - touches: called when touches begin
+ */
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Called when touches begin
         for touch in (touches){
