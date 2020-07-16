@@ -256,7 +256,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.removeFromParent()
         }
     }
-    
+    /**
+ -Parameters:
+ - contact: the player has moved
+ */
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "player" {
             collision(between: contact.bodyB.node!, object: contact.bodyA.node!)
@@ -292,16 +295,3 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
