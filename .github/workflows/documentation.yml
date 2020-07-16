@@ -18,4 +18,4 @@ jobs:
       uses: SwiftDocOrg/github-wiki-publish-action@v1
       with:
         path: "Documentation"
-      env: GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+      env: GH_PERSONAL_ACCESS_TOKEN:${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
