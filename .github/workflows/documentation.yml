@@ -1,18 +1,24 @@
 name: Documentation
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/documentation.yml
+      - Ultimate-Anarchy-Team-COSC345/COSC345.2
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@master
       - name: Generate Documentation
         uses: Ultimate-Anarchy-Team-COSC345/COSC345.2@master
         with:
-          inputs: "COSC345.2"
-          module-name: MyLibrary
+          inputs: "Ultimate-Anarchy-Team-COSC345/COSC345.2"
           output: "Documentation"
       - name: Upload Documentation to Wiki
         uses: Ultimate-Anarchy-Team-COSC345/COSC345.2@master
