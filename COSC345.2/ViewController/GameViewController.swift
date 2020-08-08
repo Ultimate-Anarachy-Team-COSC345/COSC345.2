@@ -1,31 +1,23 @@
-//
 //  GameViewController.swift
-//  COSC345.2
-//
-//  Created by makayla montgomery on 8/05/20.
-//  Copyright © 2020 makayla montgomery. All rights reserved.
+//  swipeGestures
 //
 
 import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Use view as a SKView to load spritekit contents
-        if let view = self.view as! SKView? {
-            // Initialise scene as an instance of GameScene with size equal to screen bounds
-            let scene = GameScene(size: view.bounds.size)
-            // Scale mode set to allow scene contents to fill window
-            scene.scaleMode = .aspectFill
-            
-            // Present the scene
-            view.presentScene(scene)
-            view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
-        }
+        let menuscene = MenuScene(size: view.bounds.size)
+        let skView = view as! SKView
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
+        menuscene.scaleMode = .resizeFill
+        skView.presentScene(menuscene)
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
 }
