@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
         menuscene.scaleMode = .resizeFill
         skView.presentScene(menuscene)
     }
-    
+
     override var prefersStatusBarHidden: Bool {
         return true
     }

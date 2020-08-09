@@ -26,15 +26,10 @@ class MenuScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
-        
         if playButton.contains(touchLocation) {
             let reveal = SKTransition.doorsOpenVertical(withDuration: 0.5)
             let scene = GameScene(size: size)
             self.view?.presentScene(scene, transition: reveal)
-            
         }
-        
     }
-    
-    
 }

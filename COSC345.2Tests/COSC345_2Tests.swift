@@ -9,7 +9,6 @@
 import XCTest
 import SpriteKit
 import UIKit
-
 @testable import COSC345_2
 
 class COSC345_2Tests: XCTestCase {
