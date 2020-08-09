@@ -15,7 +15,6 @@
 		5AC92C0B2464B6A200865698 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC92C092464B6A200865698 /* LaunchScreen.storyboard */; };
 		5AC92C162464B6A200865698 /* COSC345_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92C152464B6A200865698 /* COSC345_2Tests.swift */; };
 		5AC92C212464B6A200865698 /* COSC345_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92C202464B6A200865698 /* COSC345_2UITests.swift */; };
-		5C404F682488A5C900E82DCA /* Brit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960B0CE72488969C0074EB6F /* Brit.swift */; };
 		961DAF3224DE752F00AF159A /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DAF3124DE752F00AF159A /* MenuScene.swift */; };
 		961DAF3424DE757200AF159A /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DAF3324DE757200AF159A /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
@@ -52,7 +51,6 @@
 		5AC92C1C2464B6A200865698 /* COSC345.2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = COSC345.2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC92C202464B6A200865698 /* COSC345_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COSC345_2UITests.swift; sourceTree = "<group>"; };
 		5AC92C222464B6A200865698 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		960B0CE72488969C0074EB6F /* Brit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brit.swift; sourceTree = "<group>"; };
 		961DAF3124DE752F00AF159A /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		961DAF3324DE757200AF159A /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,7 +115,6 @@
 		5AC92C142464B6A200865698 /* COSC345.2Tests */ = {
 			isa = PBXGroup;
 			children = (
-				960B0CE72488969C0074EB6F /* Brit.swift */,
 				5AC92C152464B6A200865698 /* COSC345_2Tests.swift */,
 				5AC92C172464B6A200865698 /* Info.plist */,
 			);
@@ -315,7 +312,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C404F682488A5C900E82DCA /* Brit.swift in Sources */,
 				5AC92C162464B6A200865698 /* COSC345_2Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

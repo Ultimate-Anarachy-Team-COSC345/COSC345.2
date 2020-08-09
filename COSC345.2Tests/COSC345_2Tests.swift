@@ -8,10 +8,11 @@
 
 import XCTest
 import SpriteKit
+import UIKit
+
 @testable import COSC345_2
 
 class COSC345_2Tests: XCTestCase {
-    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -25,8 +26,8 @@ class COSC345_2Tests: XCTestCase {
     func testMenuSceneNotNull() {
         //let gvc = GameViewController()
         let testView = SKView()
-        let ms = MenuScene(size: testView.bounds.size)
-        XCTAssertNotNil(ms)
+        let menuscene = MenuScene(size: testView.bounds.size)
+        XCTAssertNotNil(menuscene)
     }
     
     func testGameOverSceneNotNull() {
@@ -37,60 +38,75 @@ class COSC345_2Tests: XCTestCase {
     
     func testGameSceneDidLoad() {
         let testView = SKView()
-        let gs = GameScene(size: testView.bounds.size)
-        XCTAssertNotNil(gs)
+        let gamescene = GameScene(size: testView.bounds.size)
+        XCTAssertNotNil(gamescene)
     }
     
     func testRandomNumberGenerator() {
         let testView = SKView()
-        let gs = GameScene(size: testView.bounds.size)
-        let int:Int = gs.randomNumber(range: 1...5)
+        let gamescene = GameScene(size: testView.bounds.size)
+        let int: Int=gamescene.randomNumber(range: 1...5)
         XCTAssertTrue(int > 0 && int < 6)
     }
     
     func testRandomNumberGenerator2(){
         let testView = SKView()
-        let gs = GameScene(size: testView.bounds.size)
-        let int:Int = gs.randomNumber2(range: 1...2)
+        let gamescene = GameScene(size: testView.bounds.size)
+        let int: Int=gamescene.randomNumber2(range: 1...2)
         XCTAssertTrue(int > 0 && int < 3)
     }
     
     func testSpawnMonster() {
         let testView = SKView()
-        let gs = GameScene(size: testView.bounds.size)
-        let monsterCopy = gs.spawnMonster(x: 0)
+        let gamescene = GameScene(size: testView.bounds.size)
+        let monsterCopy = gamescene.spawnMonster(x: 0)
         XCTAssertNotNil(monsterCopy)
     }
     
     func testSpawnFood() {
         let testView = SKView()
-        let gs = GameScene(size: testView.bounds.size)
-        let foodCopy = gs.spawnFood(x: 0)
+        let gamescene = GameScene(size: testView.bounds.size)
+        let foodCopy = gamescene.spawnFood(x: 0)
         XCTAssertNotNil(foodCopy)
     }
     
     func testupdateScoreValue() {
         let testView = SKView()
-        let gs = GameScene(size: testView.bounds.size)
-        let score:Int = 10
-        gs.updateScoreValue(value: 10)
-        XCTAssertEqual(score, gs.score)
+        let gamescene = GameScene(size: testView.bounds.size)
+        let score: Int=10
+        gamescene.updateScoreValue(value: 10)
+        XCTAssertEqual(score, gamescene.score)
+        gamescene.score = 40
+        gamescene.updateScoreValue(value: 10)
+        let score2: Int=50
+        XCTAssertEqual(score2, gamescene.score)
     }
     
     func testUpdateLifeValue() {
         let testView = SKView()
-        let gs = GameScene(size: testView.bounds.size)
-        let lifeCount:Int = 2
-        gs.updateLifeValue(value: 1)
-        XCTAssertEqual(lifeCount, gs.lifeCount)
+        let gamescene = GameScene(size: testView.bounds.size)
+        let lifeCount: Int=2
+        gamescene.updateLifeValue(value: 1)
+        XCTAssertEqual(lifeCount, gamescene.lifeCount)
+        gamescene.lifeCount = 1
+        gamescene.updateLifeValue(value: 1)
+        let lifeCount2: Int=0
+        XCTAssertEqual(lifeCount2, gamescene.lifeCount)
     }
 
     func testScreenDimensions() {
         let testView = SKView()
-        let gs = GameScene(size: testView.bounds.size)
-        let width:CGFloat = gs.screenWidth
-        let height:CGFloat = gs.screenHeight
+        let gamescene = GameScene(size: testView.bounds.size)
+        let width:CGFloat = gamescene.screenWidth
+        let height:CGFloat = gamescene.screenHeight
         XCTAssertTrue(width > 0 && height > 0)
+    }
+    
+    func testRandomSpawningFunciton() {
+        let testView = SKView()
+        let gamescene = GameScene(size: testView.bounds.size)
+        gamescene.randomSpawningFunction()
+        XCTAssertTrue(gamescene.randomNumber() > 0 && gamescene.randomNumber2() > 0)
     }
     
     func testPerformanceExample() {

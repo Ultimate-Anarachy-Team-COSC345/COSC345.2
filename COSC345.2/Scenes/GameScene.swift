@@ -42,12 +42,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let food = SKSpriteNode(color: UIColor.green, size: CGSize(width: 50, height: 50))
     
-    //    var points:[CGPoint] = [CGPoint(x: (screenWidth/6), y: screenHeight), CGPoint(x:0, y: screenHeight), CGPoint(x: -(screenWidth/6), y: screenHeight), CGPoint(x: -(screenWidth/3), y: screenHeight), CGPoint(x: (screenWidth/3), y: screenHeight)]
-    
-    
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
-        
         
         backgroundColor = UIColor.black
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -59,9 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.isDynamic = false
         player.name = "player"
         addChild(player)
-                print(screenHeight)
-                print(screenWidth)
-        //        print(player.position)
+        
         label.fontColor = UIColor.white
         label.fontSize = 24
         label.text = "Score: \(score)"
@@ -76,7 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lifelabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         addChild(lifelabel)
         
-        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(YourFuncName), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(randomSpawningFunction), userInfo: nil, repeats: true)
         
         monster.physicsBody?.collisionBitMask = monsterCategory
         food.physicsBody?.collisionBitMask = foodCategory
@@ -89,10 +83,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.contactTestBitMask = foodCategory
         
         addSwipeGestureRecognizers()
-        
     }
     
-    @objc func YourFuncName() {
+    @objc func randomSpawningFunction() {
         let randomInt = randomNumber()
         let randomInt2 = randomNumber2()
         if randomInt == 1 {
@@ -182,11 +175,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             switch gesture.direction {
             case .right:
                 if count < 3 {
-                    count = count + 1
-                    if(count == -1){
+                    count += 1
+                    if(count == -1) {
                         player.position = CGPoint(x: -(screenWidth/6), y: -screenHeight/3)
                     }
-                    if(count == 0){
+                    if(count == 0) {
                         player.position = CGPoint(x: 0, y: -screenHeight/3)
                     }
                     if(count == 1) {
@@ -196,14 +189,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         player.position = CGPoint(x: (screenWidth/3), y: -screenHeight/3)
                     }
                 }
-                
             case .left:
                 if count > -3 {
-                    count = count - 1
-                    if(count == 1){
+                    count -= 1
+                    if(count == 1) {
                         player.position = CGPoint(x: screenWidth/6, y: -screenHeight/3)
                     }
-                    if(count == 0){
+                    if(count == 0) {
                         player.position = CGPoint(x: 0, y: -screenHeight/3)
                     }
                     if(count == -1) {
