@@ -29,6 +29,11 @@ class COSC345_2Tests: XCTestCase {
         XCTAssertNotNil(ms)
     }
     
+//    func testMenuSceneTouchesEnded() {
+//        let testView = SKView()
+//        let ms = MenuScene(size: testView.bounds.size)
+//    }
+    
     func testGameSceneDidLoad() {
         let testView = SKView()
         let gs = GameScene(size: testView.bounds.size)
@@ -48,6 +53,22 @@ class COSC345_2Tests: XCTestCase {
         let int:Int = gs.randomNumber2(range: 1...2)
         XCTAssertTrue(int > 0 && int < 3)
     }
+    
+    func testSpawnMonster() {
+        let testView = SKView()
+        let gs = GameScene(size: testView.bounds.size)
+        let monsterCopy = gs.spawnMonster(x: 0)
+        XCTAssertNotNil(monsterCopy)
+    }
+    
+   
+    func testSpawnFood() {
+        let testView = SKView()
+        let gs = GameScene(size: testView.bounds.size)
+        let foodCopy = gs.spawnMonster(x: 0)
+        XCTAssertNotNil(foodCopy)
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
