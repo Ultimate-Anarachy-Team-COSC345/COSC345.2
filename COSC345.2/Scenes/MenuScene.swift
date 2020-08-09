@@ -18,7 +18,7 @@ class MenuScene: SKScene {
         playButton.position = CGPoint(x: size.width / 2, y: size.height / 2)
         addChild(playButton)
     }
-    
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

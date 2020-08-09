@@ -3,7 +3,6 @@ import GameplayKit
 import UIKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
     override init(size: CGSize) {
         super.init(size: size)
     }
@@ -12,27 +11,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let monsterCategory:UInt32 = 0x1 << 0 //1
-    let playerCategory:UInt32 = 0x1 << 1 //2
-    let foodCategory:UInt32 = 0x1 << 2  //4 in decimal
-    
-    
+    let monsterCategory: UInt32=0x1 << 0 //1
+    let playerCategory: UInt32=0x1 << 1 //2
+    let foodCategory:UInt32=0x1 << 2  //4 in decimal
     
     var background = UIColor.black
     var touchLocation = CGPoint()
     var shape = CGPoint()
     var count = 0
     let label = SKLabelNode(fontNamed: "ArialMT")
-    var score:Int = 0
+    var score: Int=0
     
     let lifelabel = SKLabelNode(fontNamed: "ArialMT")
-    var life:String = "<3 <3 <3"
-    var lifeCount:Int = 3
+    var life: String="<3 <3 <3"
+    var lifeCount: Int=3
     
-    public var screenWidth: CGFloat{
+    public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
     }
-    public var screenHeight: CGFloat{
+    public var screenHeight: CGFloat {
         return UIScreen.main.bounds.height
     }
     
@@ -70,7 +67,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lifelabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         addChild(lifelabel)
         
-        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(randomSpawningFunction), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector:
+            #selector(randomSpawningFunction), userInfo: nil, repeats: true)
         
         monster.physicsBody?.collisionBitMask = monsterCategory
         food.physicsBody?.collisionBitMask = foodCategory
@@ -168,40 +166,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    
-    
-    @objc func handleSwipe(gesture: UIGestureRecognizer){
+    @objc func handleSwipe(gesture: UIGestureRecognizer) {
         if let gesture = gesture as? UISwipeGestureRecognizer {
             switch gesture.direction {
             case .right:
                 if count < 3 {
                     count += 1
-                    if(count == -1) {
+                    if count == -1 {
                         player.position = CGPoint(x: -(screenWidth/6), y: -screenHeight/3)
                     }
-                    if(count == 0) {
+                    if count == 0 {
                         player.position = CGPoint(x: 0, y: -screenHeight/3)
                     }
-                    if(count == 1) {
+                    if count == 1 {
                         player.position = CGPoint(x: screenWidth/6, y: -screenHeight/3)
                     }
-                    if(count == 2) {
+                    if count == 2 {
                         player.position = CGPoint(x: (screenWidth/3), y: -screenHeight/3)
                     }
                 }
             case .left:
                 if count > -3 {
                     count -= 1
-                    if(count == 1) {
+                    if count == 1 {
                         player.position = CGPoint(x: screenWidth/6, y: -screenHeight/3)
                     }
-                    if(count == 0) {
+                    if count == 0 {
                         player.position = CGPoint(x: 0, y: -screenHeight/3)
                     }
-                    if(count == -1) {
+                    if count == -1 {
                         player.position = CGPoint(x: -screenWidth/6, y: -screenHeight/3)
                     }
-                    if(count == -2) {
+                    if count == -2 {
                         player.position = CGPoint(x: -screenWidth/3, y: -screenHeight/3)
                     }
                 }
@@ -213,7 +209,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updateScoreValue(value: Int) {
         score += value
-        if(score == 50){
+        if score == 50 {
             let reveal = SKTransition.flipVertical(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
             view?.presentScene(gameOverScene, transition: reveal)
@@ -221,23 +217,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.text = "Score: \(score)"
     }
     
-    
     func updateLifeValue(value: Int) {
         lifeCount -= value
-        if(lifeCount == 0) {
+        if lifeCount == 0 {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             view?.presentScene(gameOverScene, transition: reveal)
         }
-        if(lifeCount == 2) {
+        if lifeCount == 2 {
             lifelabel.text = "<3 <3"
         }
-        if(lifeCount == 1) {
+        if lifeCount == 1 {
             lifelabel.text = "<3"
         }
     }
-    
-    
+
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "food" {
             contact.bodyA.node?.removeFromParent()
@@ -253,7 +247,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             contact.bodyB.node?.removeFromParent()
             updateLifeValue(value: 1)
         }
-        
-        
     }
 }

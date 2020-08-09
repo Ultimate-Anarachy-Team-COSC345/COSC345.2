@@ -48,7 +48,7 @@ class COSC345_2Tests: XCTestCase {
         XCTAssertTrue(int > 0 && int < 6)
     }
     
-    func testRandomNumberGenerator2(){
+    func testRandomNumberGenerator2() {
         let testView = SKView()
         let gamescene = GameScene(size: testView.bounds.size)
         let int: Int=gamescene.randomNumber2(range: 1...2)
@@ -96,8 +96,8 @@ class COSC345_2Tests: XCTestCase {
     func testScreenDimensions() {
         let testView = SKView()
         let gamescene = GameScene(size: testView.bounds.size)
-        let width:CGFloat = gamescene.screenWidth
-        let height:CGFloat = gamescene.screenHeight
+        let width: CGFloat=gamescene.screenWidth
+        let height: CGFloat=gamescene.screenHeight
         XCTAssertTrue(width > 0 && height > 0)
     }
     
