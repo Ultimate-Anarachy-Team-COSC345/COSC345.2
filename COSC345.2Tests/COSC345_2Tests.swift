@@ -61,12 +61,35 @@ class COSC345_2Tests: XCTestCase {
         XCTAssertNotNil(monsterCopy)
     }
     
-   
     func testSpawnFood() {
         let testView = SKView()
         let gs = GameScene(size: testView.bounds.size)
-        let foodCopy = gs.spawnMonster(x: 0)
+        let foodCopy = gs.spawnFood(x: 0)
         XCTAssertNotNil(foodCopy)
+    }
+    
+    func testupdateScoreValue() {
+        let testView = SKView()
+        let gs = GameScene(size: testView.bounds.size)
+        let score:Int = 10
+        gs.updateScoreValue(value: 10)
+        XCTAssertEqual(score, gs.score)
+    }
+    
+    func testUpdateLifeValue() {
+        let testView = SKView()
+        let gs = GameScene(size: testView.bounds.size)
+        let lifeCount:Int = 2
+        gs.updateLifeValue(value: 1)
+        XCTAssertEqual(lifeCount, gs.lifeCount)
+    }
+
+    func testScreenDimensions() {
+        let testView = SKView()
+        let gs = GameScene(size: testView.bounds.size)
+        let width:CGFloat = gs.screenWidth
+        let height:CGFloat = gs.screenHeight
+        XCTAssertTrue(width > 0 && height > 0)
     }
     
     func testPerformanceExample() {
