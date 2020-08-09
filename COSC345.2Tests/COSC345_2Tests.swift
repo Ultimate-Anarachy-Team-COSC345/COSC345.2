@@ -29,10 +29,11 @@ class COSC345_2Tests: XCTestCase {
         XCTAssertNotNil(ms)
     }
     
-//    func testMenuSceneTouchesEnded() {
-//        let testView = SKView()
-//        let ms = MenuScene(size: testView.bounds.size)
-//    }
+    func testGameOverSceneNotNull() {
+        let testView = SKView()
+        let gos = GameOverScene(size: testView.bounds.size, won: true)
+        XCTAssertNotNil(gos)
+    }
     
     func testGameSceneDidLoad() {
         let testView = SKView()
