@@ -59,8 +59,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.isDynamic = false
         player.name = "player"
         addChild(player)
-        //        print(screenHeight)
-        //        print(screenWidth)
+                print(screenHeight)
+                print(screenWidth)
         //        print(player.position)
         label.fontColor = UIColor.white
         label.fontSize = 24
@@ -147,7 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             monsterCopy.physicsBody?.affectedByGravity = false
             monsterCopy.physicsBody?.linearDamping = 0
             monsterCopy.physicsBody?.isDynamic = true
-            monsterCopy.physicsBody?.velocity = CGVector(dx: 0, dy: -400)
+            monsterCopy.physicsBody?.velocity = CGVector(dx: 0, dy: -250)
             monsterCopy.name = "monster"
             addChild(monsterCopy)
         }
@@ -160,7 +160,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             foodCopy.physicsBody?.affectedByGravity = false
             foodCopy.physicsBody?.linearDamping = 0
             foodCopy.physicsBody?.isDynamic = true
-            foodCopy.physicsBody?.velocity = CGVector(dx: 0, dy: -400)
+            foodCopy.physicsBody?.velocity = CGVector(dx: 0, dy: -250)
             foodCopy.name = "food"
             addChild(foodCopy)
         }
@@ -221,7 +221,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updateScoreValue(value: Int) {
         score += value
-        if(score == 30){
+        if(score == 50){
             let reveal = SKTransition.flipVertical(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
             view?.presentScene(gameOverScene, transition: reveal)

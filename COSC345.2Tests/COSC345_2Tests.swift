@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import SpriteKit
 @testable import COSC345_2
 
 class COSC345_2Tests: XCTestCase {
@@ -21,11 +22,32 @@ class COSC345_2Tests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testMenuSceneNotNull() {
+        //let gvc = GameViewController()
+        let testView = SKView()
+        let ms = MenuScene(size: testView.bounds.size)
+        XCTAssertNotNil(ms)
     }
     
+    func testGameSceneDidLoad() {
+        let testView = SKView()
+        let gs = GameScene(size: testView.bounds.size)
+        XCTAssertNotNil(gs)
+    }
+    
+    func testRandomNumberGenerator() {
+        let testView = SKView()
+        let gs = GameScene(size: testView.bounds.size)
+        let int:Int = gs.randomNumber(range: 1...5)
+        XCTAssertTrue(int > 0 && int < 6)
+    }
+    
+    func testRandomNumberGenerator2(){
+        let testView = SKView()
+        let gs = GameScene(size: testView.bounds.size)
+        let int:Int = gs.randomNumber2(range: 1...2)
+        XCTAssertTrue(int > 0 && int < 3)
+    }
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
