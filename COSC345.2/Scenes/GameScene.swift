@@ -38,6 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let food = SKSpriteNode(color: UIColor.green, size: CGSize(width: 50, height: 50))
     
+    
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         
@@ -69,11 +70,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector:
             #selector(randomSpawningFunction), userInfo: nil, repeats: true)
         
+        // Collision bit mask is used to determine if physical collision happended using their categories
+        // A logical AND is performed on these categories and if a non zero value is returned it
+        // is determined a collsion occured - this means the objects bounce off each other which is where
+        // contact test bitmask comes in
         monster.physicsBody?.collisionBitMask = monsterCategory
         food.physicsBody?.collisionBitMask = foodCategory
         player.physicsBody?.collisionBitMask = monsterCategory
         player.physicsBody?.collisionBitMask = foodCategory
         
+        // SceneKit compares the body’s contact mask to the other body’s category mask by performing
+        //a bitwise AND operation. If contact occurs then a message is sent to the contactDelegate.
+        // we are interested if our play comes into conatct and we dont want it to bounce off we want to
+        // do something with that interaction
         monster.physicsBody?.contactTestBitMask = monsterCategory
         food.physicsBody?.contactTestBitMask = foodCategory
         player.physicsBody?.contactTestBitMask = monsterCategory
@@ -82,6 +91,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addSwipeGestureRecognizers()
     }
     
+    /**
+     randomSpawningFunction a random number is generated every 1/2 a second in which a monster or food is spawned
+     - returns: a randomly spawned monster or food
+     */
     @objc func randomSpawningFunction() {
         let randomInt = randomNumber()
         let randomInt2 = randomNumber2()
@@ -118,18 +131,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /**
+     randomNumber generator to generate an int between 1 to 5 inclusive
+     - Parameters:
+        - range: int between 1 to 5 inclusive
+     - returns: a randomly generated int between 1 and 5 inclusive
+ */
     func randomNumber(range: ClosedRange<Int> = 1...5) -> Int {
         let min = range.lowerBound
         let max = range.upperBound
         return Int(arc4random_uniform(UInt32(1 + max - min))) + min
     }
     
+    /**
+     randomNumber2 generator to generate an int between 1 to 2 inclusive
+     - Parameters:
+        - range: int between 1 to 2 inclusive
+     - returns: a randomly generated int between 1 and 2 inclusive
+     */
     func randomNumber2(range: ClosedRange<Int> = 1...2) -> Int {
         let min = range.lowerBound
         let max = range.upperBound
         return Int(arc4random_uniform(UInt32(1 + max - min))) + min
     }
     
+    /**
+     spawnMonster creates a copy of monster so that many of the same monster object can be spawned
+     many times and act as thier own individual entities
+     - Parameters:
+        - x: a GCFloat to decide what lane the spawned monster will fall down
+     - Returns: a spawned monster just on the top vertical edge of the screen based on x
+ */
     func spawnMonster(x: CGFloat) {
         if let monsterCopy = monster.copy() as? SKSpriteNode {
             monsterCopy.position = CGPoint(x: x, y: screenHeight/2)
@@ -143,6 +175,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /**
+     spawnFood creates a copy of food so that many of the same food object can be spawned
+     many times and act as thier own individual entities
+     - Parameters:
+        - x: a GCFloat to decide what lane the spawned food will fall down
+     - Returns: a spawned food just on the top vertical edge of the screen based on x
+     */
     func spawnFood(x: CGFloat) {
         if let foodCopy = food.copy() as? SKSpriteNode {
             foodCopy.position = CGPoint(x: x, y: screenHeight/2)
@@ -156,6 +195,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /**
+    Adding the swipe gestures left and right to the scene
+ - Returns: the array of left and right swipe gestures
+ */
     func addSwipeGestureRecognizers() {
         let gestureDirections: [UISwipeGestureRecognizerDirection] = [.right, .left]
         for gestureDirection in gestureDirections {
@@ -165,6 +208,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /**
+ Handles the swipe gestures and decides where the player moves
+ - Parameters:
+    - gesture: left or right gesture based on users actions
+ */
     @objc func handleSwipe(gesture: UIGestureRecognizer) {
         if let gesture = gesture as? UISwipeGestureRecognizer {
             switch gesture.direction {
@@ -206,6 +254,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /**
+ Updates the score value. To win the game at the moment you need to have a score of 50
+ - Parameters:
+    - value: int which adds 10 to the score
+ - returns: the updated label score
+ */
     func updateScoreValue(value: Int) {
         score += value
         if score == 50 {
@@ -216,6 +270,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.text = "Score: \(score)"
     }
     
+    /**
+ Updates the life value, in a game you get three lives
+ - Parameters:
+     - value: int which decreses the life count by 1
+ - returns: the updated hearts on the bottom of the screen
+ */
     func updateLifeValue(value: Int) {
         lifeCount -= value
         if lifeCount == 0 {
@@ -231,6 +291,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    /**
+ Is called when a collision happens between player and food or monster
+ - Parameters:
+     - contact: the collison that occurs
+ - returns: the node which collided with the player is removed
+ */
     func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "food" {
             contact.bodyA.node?.removeFromParent()
