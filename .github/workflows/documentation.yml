@@ -1,4 +1,3 @@
-
 name: Documentation
 
 on: [push]
@@ -13,6 +12,7 @@ jobs:
         uses: SwiftDocOrg/swift-doc@master
         with:
           inputs: "COSC345.2"
+          module-name: MyLibrary
           output: "Documentation"
       - name: Upload Documentation to Wiki
         uses: SwiftDocOrg/github-wiki-publish-action@v1
