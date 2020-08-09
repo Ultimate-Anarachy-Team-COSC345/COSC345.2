@@ -2,11 +2,11 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+public class GameScene: SKScene, SKPhysicsContactDelegate {
     override init(size: CGSize) {
         super.init(size: size)
     }
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -39,7 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let food = SKSpriteNode(color: UIColor.green, size: CGSize(width: 50, height: 50))
     
     
-    override func didMove(to view: SKView) {
+    public override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         
         backgroundColor = UIColor.black
@@ -297,7 +297,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      - contact: the collison that occurs
  - returns: the node which collided with the player is removed
  */
-    func didBegin(_ contact: SKPhysicsContact) {
+    public func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "food" {
             contact.bodyA.node?.removeFromParent()
             updateScoreValue(value: 10)

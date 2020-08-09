@@ -7,7 +7,7 @@
 import Foundation
 import SpriteKit
 
-class GameOverScene: SKScene {
+public class GameOverScene: SKScene {
     init(size: CGSize, won: Bool) {
         super.init(size: size)
         // 1
@@ -34,7 +34,7 @@ class GameOverScene: SKScene {
             ]))
     }
     // 6
-    required init(coder aDecoder: NSCoder) {
+    public required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

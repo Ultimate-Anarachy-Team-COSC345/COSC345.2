@@ -8,7 +8,7 @@
 import Foundation
 import SpriteKit
 
-class MenuScene: SKScene {
+public class MenuScene: SKScene {
     let playButton = SKLabelNode()
     override init(size: CGSize) {
         super.init(size: size)
@@ -19,11 +19,11 @@ class MenuScene: SKScene {
         addChild(playButton)
     }
 
-    required init(coder aDecoder: NSCoder) {
+        public required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
         if playButton.contains(touchLocation) {
