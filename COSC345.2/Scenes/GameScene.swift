@@ -14,7 +14,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     let playerCategory: UInt32=0x1 << 1 //2
     let foodCategory:UInt32=0x1 << 2  //4 in decimal
     
-    var background = UIColor.black
+    var background = SKSpriteNode(imageNamed:"BackgroundCovid")
     var touchLocation = CGPoint()
     var shape = CGPoint()
     var count = 0
@@ -34,10 +34,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let player = SKSpriteNode(color: UIColor.orange, size: CGSize(width: 50, height: 50))
     
-    let monster = SKSpriteNode(color: UIColor.red, size: CGSize(width: 50, height: 50))
+    let monster = SKSpriteNode(imageNamed: "Karen Sprite2.1 transparent")
     
-    let food = SKSpriteNode(color: UIColor.green, size: CGSize(width: 50, height: 50))
-    
+    let food = SKSpriteNode(imageNamed: "Orange.1")
+   
     
     public override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
@@ -67,6 +67,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         lifelabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         addChild(lifelabel)
         
+        //let foodTexture = SKTexture(imageNamed: "Orange.1")
+        //food = SKSpriteNode(texture: foodTexture)
+        
+        
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector:
             #selector(randomSpawningFunction), userInfo: nil, repeats: true)
         
@@ -87,6 +91,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         food.physicsBody?.contactTestBitMask = foodCategory
         player.physicsBody?.contactTestBitMask = monsterCategory
         player.physicsBody?.contactTestBitMask = foodCategory
+        
+        background.position = CGPoint(x: 0,y: 0)
+        background.zPosition = -1
+        addChild(background)
         
         addSwipeGestureRecognizers()
     }
@@ -164,6 +172,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  */
     func spawnMonster(x: CGFloat) {
         if let monsterCopy = monster.copy() as? SKSpriteNode {
+            monsterCopy.size = CGSize(width: 50, height: 50)
             monsterCopy.position = CGPoint(x: x, y: screenHeight/2)
             monsterCopy.physicsBody = SKPhysicsBody(rectangleOf: monster.size)
             monsterCopy.physicsBody?.affectedByGravity = false
@@ -184,6 +193,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
      */
     func spawnFood(x: CGFloat) {
         if let foodCopy = food.copy() as? SKSpriteNode {
+            foodCopy.size = CGSize(width: 50, height: 50)
             foodCopy.position = CGPoint(x: x, y: screenHeight/2)
             foodCopy.physicsBody = SKPhysicsBody(rectangleOf: food.size)
             foodCopy.physicsBody?.affectedByGravity = false
@@ -199,7 +209,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     Adding the swipe gestures left and right to the scene
  - Returns: the array of left and right swipe gestures
  */
-    func addSwipeGestureRecognizers() {
+    public func addSwipeGestureRecognizers() {
         let gestureDirections: [UISwipeGestureRecognizerDirection] = [.right, .left]
         for gestureDirection in gestureDirections {
             let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))

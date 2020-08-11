@@ -1,22 +1,21 @@
 {
   "images" : [
     {
-      "filename" : "101468764_273946930422224_7676745873954439168_n.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "102441900_254151222353877_3372039799740301312_n.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Karen Sprite2.1 transparent.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "author" : "xcode",
-    "version" : 1
+    "version" : 1,
+    "author" : "xcode"
   }
 }
