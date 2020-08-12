@@ -10,10 +10,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let monsterCategory: UInt32=0x1 << 0 //1
-    let playerCategory: UInt32=0x1 << 1 //2
-    let foodCategory:UInt32=0x1 << 2  //4 in decimal
-    
     var background = SKSpriteNode(imageNamed:"BackgroundCovid")
     var touchLocation = CGPoint()
     var shape = CGPoint()
@@ -33,23 +29,36 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     let player = SKSpriteNode(color: UIColor.orange, size: CGSize(width: 50, height: 50))
-    
     let monster = SKSpriteNode(imageNamed: "Karen Sprite2.1 transparent")
+    let food = SKSpriteNode(imageNamed: "Resize BasketWFood")
     
-    let food = SKSpriteNode(imageNamed: "Orange.1")
-   
+    struct PhysicsCategory {
+        static let none               :UInt32 = 0
+        static let monsterCategory    :UInt32 = 0x1 << 1
+        static let foodCategory       :UInt32 = 0x1 << 1
+        static let playerCategory     :UInt32 = 0x1 << 0
+    }
     
+    /**
+ Called immediately after a scene is presented by a view. This method to creates the scene’s contents.
+     A contact is used when you need to know that two bodies are touching each other
+     A collision is used to prevent two objects from interpenetrating each other
+     An SKPhysicsBody object defines the shape and simulation parameters for a physics body in the system.
+ - Parameters:
+    - view: The view that is presenting the scene.
+ */
     public override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         
         backgroundColor = UIColor.black
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        //player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         player.position = CGPoint(x: 0, y: -screenHeight/3)
-        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
+        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2)
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.isDynamic = false
+        player.zPosition = 0
         player.name = "player"
         addChild(player)
         
@@ -67,35 +76,21 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         lifelabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         addChild(lifelabel)
         
-        //let foodTexture = SKTexture(imageNamed: "Orange.1")
-        //food = SKSpriteNode(texture: foodTexture)
-        
-        
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector:
             #selector(randomSpawningFunction), userInfo: nil, repeats: true)
         
-        // Collision bit mask is used to determine if physical collision happended using their categories
-        // A logical AND is performed on these categories and if a non zero value is returned it
-        // is determined a collsion occured - this means the objects bounce off each other which is where
-        // contact test bitmask comes in
-        monster.physicsBody?.collisionBitMask = monsterCategory
-        food.physicsBody?.collisionBitMask = foodCategory
-        player.physicsBody?.collisionBitMask = monsterCategory
-        player.physicsBody?.collisionBitMask = foodCategory
-        
-        // SceneKit compares the body’s contact mask to the other body’s category mask by performing
-        //a bitwise AND operation. If contact occurs then a message is sent to the contactDelegate.
-        // we are interested if our play comes into conatct and we dont want it to bounce off we want to
-        // do something with that interaction
-        monster.physicsBody?.contactTestBitMask = monsterCategory
-        food.physicsBody?.contactTestBitMask = foodCategory
-        player.physicsBody?.contactTestBitMask = monsterCategory
-        player.physicsBody?.contactTestBitMask = foodCategory
+        monster.physicsBody?.categoryBitMask = PhysicsCategory.monsterCategory
+        food.physicsBody?.categoryBitMask = PhysicsCategory.foodCategory
+        player.physicsBody?.categoryBitMask = PhysicsCategory.playerCategory
+        monster.physicsBody?.collisionBitMask = PhysicsCategory.none
+        food.physicsBody?.collisionBitMask = PhysicsCategory.none
+        monster.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
+        food.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
+        player.physicsBody?.contactTestBitMask = 2
         
         background.position = CGPoint(x: 0,y: 0)
         background.zPosition = -1
         addChild(background)
-        
         addSwipeGestureRecognizers()
     }
     
@@ -103,7 +98,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
      randomSpawningFunction a random number is generated every 1/2 a second in which a monster or food is spawned
      - returns: a randomly spawned monster or food
      */
-    @objc func randomSpawningFunction() {
+    @objc public func randomSpawningFunction() {
         let randomInt = randomNumber()
         let randomInt2 = randomNumber2()
         if randomInt == 1 {
@@ -145,7 +140,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         - range: int between 1 to 5 inclusive
      - returns: a randomly generated int between 1 and 5 inclusive
  */
-    func randomNumber(range: ClosedRange<Int> = 1...5) -> Int {
+   public func randomNumber(range: ClosedRange<Int> = 1...5) -> Int {
         let min = range.lowerBound
         let max = range.upperBound
         return Int(arc4random_uniform(UInt32(1 + max - min))) + min
@@ -157,7 +152,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         - range: int between 1 to 2 inclusive
      - returns: a randomly generated int between 1 and 2 inclusive
      */
-    func randomNumber2(range: ClosedRange<Int> = 1...2) -> Int {
+   public func randomNumber2(range: ClosedRange<Int> = 1...2) -> Int {
         let min = range.lowerBound
         let max = range.upperBound
         return Int(arc4random_uniform(UInt32(1 + max - min))) + min
@@ -170,14 +165,17 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         - x: a GCFloat to decide what lane the spawned monster will fall down
      - Returns: a spawned monster just on the top vertical edge of the screen based on x
  */
-    func spawnMonster(x: CGFloat) {
+   public func spawnMonster(x: CGFloat) {
         if let monsterCopy = monster.copy() as? SKSpriteNode {
             monsterCopy.size = CGSize(width: 50, height: 50)
+            monsterCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             monsterCopy.position = CGPoint(x: x, y: screenHeight/2)
-            monsterCopy.physicsBody = SKPhysicsBody(rectangleOf: monster.size)
+            monsterCopy.zPosition = 0
+            monsterCopy.physicsBody = SKPhysicsBody(circleOfRadius: monster.size.width/2)
             monsterCopy.physicsBody?.affectedByGravity = false
             monsterCopy.physicsBody?.linearDamping = 0
             monsterCopy.physicsBody?.isDynamic = true
+            monsterCopy.physicsBody?.usesPreciseCollisionDetection = true
             monsterCopy.physicsBody?.velocity = CGVector(dx: 0, dy: -250)
             monsterCopy.name = "monster"
             addChild(monsterCopy)
@@ -191,11 +189,13 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         - x: a GCFloat to decide what lane the spawned food will fall down
      - Returns: a spawned food just on the top vertical edge of the screen based on x
      */
-    func spawnFood(x: CGFloat) {
+   public func spawnFood(x: CGFloat) {
         if let foodCopy = food.copy() as? SKSpriteNode {
+            foodCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             foodCopy.size = CGSize(width: 50, height: 50)
             foodCopy.position = CGPoint(x: x, y: screenHeight/2)
-            foodCopy.physicsBody = SKPhysicsBody(rectangleOf: food.size)
+            foodCopy.zPosition = 0
+            foodCopy.physicsBody = SKPhysicsBody(circleOfRadius: food.size.width/8)
             foodCopy.physicsBody?.affectedByGravity = false
             foodCopy.physicsBody?.linearDamping = 0
             foodCopy.physicsBody?.isDynamic = true
@@ -223,7 +223,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  - Parameters:
     - gesture: left or right gesture based on users actions
  */
-    @objc func handleSwipe(gesture: UIGestureRecognizer) {
+    @objc public func handleSwipe(gesture: UIGestureRecognizer) {
         if let gesture = gesture as? UISwipeGestureRecognizer {
             switch gesture.direction {
             case .right:
@@ -270,9 +270,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     - value: int which adds 10 to the score
  - returns: the updated label score
  */
-    func updateScoreValue(value: Int) {
+   public func updateScoreValue(value: Int) {
         score += value
-        if score == 50 {
+        if score == 250 {
             let reveal = SKTransition.flipVertical(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
             view?.presentScene(gameOverScene, transition: reveal)
@@ -286,7 +286,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
      - value: int which decreses the life count by 1
  - returns: the updated hearts on the bottom of the screen
  */
-    func updateLifeValue(value: Int) {
+   public func updateLifeValue(value: Int) {
         lifeCount -= value
         if lifeCount == 0 {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
@@ -300,6 +300,15 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             lifelabel.text = "<3"
         }
     }
+    /**
+ Removes every sprite that comes in contact with the player
+ - Parameters:
+    - nodeA: the node that collides with the player node
+    - nodeB: the player that collides with all other nodes
+ */
+   public func projectileDidCollideWithPlayer(nodeA: SKSpriteNode, nodeB: SKSpriteNode) {
+        nodeA.removeFromParent()
+    }
 
     /**
  Is called when a collision happens between player and food or monster
@@ -308,19 +317,31 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  - returns: the node which collided with the player is removed
  */
     public func didBegin(_ contact: SKPhysicsContact) {
-        if contact.bodyA.node?.name == "food" {
-            contact.bodyA.node?.removeFromParent()
-            updateScoreValue(value: 10)
-        } else if contact.bodyB.node?.name == "food" {
-            contact.bodyB.node?.removeFromParent()
-            updateScoreValue(value: 10)
+        // 1
+        var firstBody:SKPhysicsBody
+        var secondBody:SKPhysicsBody
+        if contact.bodyA.categoryBitMask > contact.bodyB.categoryBitMask{
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
         }
-        if contact.bodyA.node?.name == "monster" {
-            contact.bodyA.node?.removeFromParent()
-            updateLifeValue(value: 1)
-        } else if contact.bodyB.node?.name == "monster" {
-            contact.bodyB.node?.removeFromParent()
-            updateLifeValue(value: 1)
+        else{
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        if (firstBody.categoryBitMask & PhysicsCategory.monsterCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0{
+            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
+            if firstBody.node?.name == "food" {
+                updateScoreValue(value: 10)
+            } else if firstBody.node?.name == "monster" {
+                updateLifeValue(value: 1)
+            }
+        } else if (firstBody.categoryBitMask & PhysicsCategory.foodCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0{
+            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
+            if firstBody.node?.name == "food" {
+                updateScoreValue(value: 10)
+            } else if firstBody.node?.name == "monster" {
+                updateLifeValue(value: 1)
+            }
         }
     }
 }
