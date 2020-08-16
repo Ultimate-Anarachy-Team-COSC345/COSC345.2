@@ -53,6 +53,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         backgroundColor = UIColor.black
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
+        player.size = CGSize(width: 60, height: 60)
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         player.position = CGPoint(x: 0, y: -screenHeight/3)
         player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2)
@@ -88,6 +89,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         food.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
         player.physicsBody?.contactTestBitMask = 2
         
+        background.size = (self.frame.size)
         background.position = CGPoint(x: 0,y: 0)
         background.zPosition = -1
         addChild(background)
@@ -167,7 +169,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  */
    public func spawnMonster(x: CGFloat) {
         if let monsterCopy = monster.copy() as? SKSpriteNode {
-            monsterCopy.size = CGSize(width: 50, height: 50)
+            monsterCopy.size = CGSize(width: 40, height: 50)
             monsterCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             monsterCopy.position = CGPoint(x: x, y: screenHeight/2)
             monsterCopy.zPosition = 0
