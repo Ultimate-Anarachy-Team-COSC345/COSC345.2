@@ -30,7 +30,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let player = SKSpriteNode(color: UIColor.orange, size: CGSize(width: 50, height: 50))
     let monster = SKSpriteNode(imageNamed: "Karen Sprite2.1 transparent")
-    let food = SKSpriteNode(imageNamed: "Resize BasketWFood")
+    let food = SKSpriteNode(imageNamed: "Image")
     
     struct PhysicsCategory {
         static let none               :UInt32 = 0
@@ -192,7 +192,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
    public func spawnFood(x: CGFloat) {
         if let foodCopy = food.copy() as? SKSpriteNode {
             foodCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            foodCopy.size = CGSize(width: 50, height: 50)
+            foodCopy.size = CGSize(width: 50, height: 40)
             foodCopy.position = CGPoint(x: x, y: screenHeight/2)
             foodCopy.zPosition = 0
             foodCopy.physicsBody = SKPhysicsBody(circleOfRadius: food.size.width/8)
