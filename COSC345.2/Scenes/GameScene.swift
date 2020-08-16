@@ -28,7 +28,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         return UIScreen.main.bounds.height
     }
     
-    let player = SKSpriteNode(color: UIColor.orange, size: CGSize(width: 50, height: 50))
+    let player = SKSpriteNode(imageNamed: "Player")
     let monster = SKSpriteNode(imageNamed: "Karen Sprite2.1 transparent")
     let food = SKSpriteNode(imageNamed: "Image")
     
