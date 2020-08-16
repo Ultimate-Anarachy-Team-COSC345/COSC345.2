@@ -63,7 +63,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         player.name = "player"
         addChild(player)
         
-        label.fontColor = UIColor.white
+        label.fontColor = UIColor.black
         label.fontSize = 24
         label.text = "Score: \(score)"
         label.position = CGPoint(x: frame.minX, y: frame.minY)
