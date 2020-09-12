@@ -28,8 +28,8 @@ public class MenuScene: SKScene {
         let touchLocation = touch!.location(in: self)
         if playButton.contains(touchLocation) {
             let reveal = SKTransition.doorsOpenVertical(withDuration: 0.5)
-            let scene = GameScene(size: size)
-            self.view?.presentScene(scene, transition: reveal)
+            let difficultyScene = DifficultyScene(size:self.size)
+            self.view?.presentScene(difficultyScene, transition: reveal)
         }
     }
 }

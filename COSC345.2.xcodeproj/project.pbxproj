@@ -20,6 +20,8 @@
 		961A432E24E91A9100B4A617 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A432D24E91A9100B4A617 /* GameplayKit.framework */; };
 		961DAF3224DE752F00AF159A /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DAF3124DE752F00AF159A /* MenuScene.swift */; };
 		961DAF3424DE757200AF159A /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DAF3324DE757200AF159A /* GameOverScene.swift */; };
+		9677463C250C5F3F00600CD0 /* Karen.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9677463A250C567300600CD0 /* Karen.atlas */; };
+		9677463E250C61CF00600CD0 /* DifficultyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9677463D250C61CF00600CD0 /* DifficultyScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +44,7 @@
 /* Begin PBXFileReference section */
 		5AC92BF72464B6A200865698 /* COSC345.2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COSC345.2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC92BFA2464B6A200865698 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5AC92C002464B6A200865698 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		5AC92C002464B6A200865698 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = COSC345.2/Scenes/GameScene.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5AC92C022464B6A200865698 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		5AC92C052464B6A200865698 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5AC92C0A2464B6A200865698 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -59,6 +61,8 @@
 		961A432D24E91A9100B4A617 /* GameplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameplayKit.framework; path = System/Library/Frameworks/GameplayKit.framework; sourceTree = SDKROOT; };
 		961DAF3124DE752F00AF159A /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		961DAF3324DE757200AF159A /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		9677463A250C567300600CD0 /* Karen.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = Karen.atlas; path = ../../../Karen.atlas; sourceTree = "<group>"; };
+		9677463D250C61CF00600CD0 /* DifficultyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +150,7 @@
 				5AC92C002464B6A200865698 /* GameScene.swift */,
 				961DAF3124DE752F00AF159A /* MenuScene.swift */,
 				961DAF3324DE757200AF159A /* GameOverScene.swift */,
+				9677463D250C61CF00600CD0 /* DifficultyScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 		5C35CE1F247CB0D100C3D146 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				9677463A250C567300600CD0 /* Karen.atlas */,
 				9617858724E13C85009CB65C /* Assets.xcassets */,
 				5AC92C042464B6A200865698 /* Main.storyboard */,
 				5AC92C092464B6A200865698 /* LaunchScreen.storyboard */,
@@ -296,6 +302,7 @@
 				5AC92C062464B6A200865698 /* Main.storyboard in Resources */,
 				961A432A24E910D000B4A617 /* Assets.xcassets in Resources */,
 				5AC92C0B2464B6A200865698 /* LaunchScreen.storyboard in Resources */,
+				9677463C250C5F3F00600CD0 /* Karen.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				961DAF3424DE757200AF159A /* GameOverScene.swift in Sources */,
+				9677463E250C61CF00600CD0 /* DifficultyScene.swift in Sources */,
 				5AC92C012464B6A200865698 /* GameScene.swift in Sources */,
 				961DAF3224DE752F00AF159A /* MenuScene.swift in Sources */,
 				5AC92C032464B6A200865698 /* GameViewController.swift in Sources */,

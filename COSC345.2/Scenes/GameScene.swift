@@ -3,8 +3,11 @@ import GameplayKit
 import UIKit
 
 public class GameScene: SKScene, SKPhysicsContactDelegate {
-    override init(size: CGSize) {
+    var gameDifficulty:String?
+    
+    init(size: CGSize, difficulty: String) {
         super.init(size: size)
+        gameDifficulty = difficulty
     }
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -20,6 +23,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     let lifelabel = SKLabelNode(fontNamed: "ArialMT")
     var life: String="<3 <3 <3"
     var lifeCount: Int=3
+    
+    var karenFrames:[SKTexture]?
+    
     
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
@@ -77,8 +83,19 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         lifelabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         addChild(lifelabel)
         
+        if gameDifficulty == "easy" {
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector:
             #selector(randomSpawningFunction), userInfo: nil, repeats: true)
+        } else if gameDifficulty == "medium" {
+            Timer.scheduledTimer(timeInterval: 0.3, target: self, selector:
+                #selector(randomSpawningFunction), userInfo: nil, repeats: true)
+        } else if gameDifficulty == "hard" {
+            Timer.scheduledTimer(timeInterval: 0.2, target: self, selector:
+                #selector(randomSpawningFunction), userInfo: nil, repeats: true)
+        } else if gameDifficulty == "2020" {
+            Timer.scheduledTimer(timeInterval: 0.05, target: self, selector:
+                #selector(randomSpawningFunction), userInfo: nil, repeats: true)
+        }
         
         monster.physicsBody?.categoryBitMask = PhysicsCategory.monsterCategory
         food.physicsBody?.categoryBitMask = PhysicsCategory.foodCategory
@@ -93,6 +110,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         background.position = CGPoint(x: 0,y: 0)
         background.zPosition = -1
         addChild(background)
+        //spawnKaren()
         addSwipeGestureRecognizers()
     }
     
@@ -134,6 +152,34 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
                 spawnFood(x: (screenWidth/6))
             }
         }
+    }
+    
+    func spawnKaren() {
+        var frames:[SKTexture] = []
+        let karenAtlas = SKTextureAtlas(named: "Karen")
+        
+        let texture = karenAtlas.textureNamed("Karen Sprite1")
+        frames.append(texture)
+        
+        let texture1 = karenAtlas.textureNamed("Karen Sprite2")
+        frames.append(texture1)
+        
+        karenFrames = frames
+        
+        let karenFrame = karenFrames![0]
+        let karen = SKSpriteNode(texture: karenFrame)
+        karen.size = CGSize(width: 40, height:40)
+        karen.position = CGPoint(x: 0, y: 0)
+        karen.anchorPoint = CGPoint(x: 0.5, y:0.5)
+        karen.zPosition = 0
+        karen.physicsBody = SKPhysicsBody(circleOfRadius: karen.size.width/2)
+        karen.physicsBody?.affectedByGravity = false
+        karen.physicsBody?.linearDamping = 0
+        karen.physicsBody?.isDynamic = true
+        karen.physicsBody?.velocity = CGVector(dx: 0, dy: -250)
+        addChild(karen)
+        
+        karen.run(SKAction.repeatForever(SKAction.animate(with: karenFrames!, timePerFrame: 0.05)))
     }
     
     /**
