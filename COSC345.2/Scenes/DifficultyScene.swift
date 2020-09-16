@@ -8,12 +8,14 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class DifficultyScene: SKScene {
     let easyButton = SKLabelNode()
     let mediumButton = SKLabelNode()
     let hardButton = SKLabelNode()
     let twentyButton = SKLabelNode()
+    var backgroundMusic: AVAudioPlayer?
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -31,15 +33,25 @@ class DifficultyScene: SKScene {
         twentyButton.fontColor = SKColor.white
         twentyButton.text = "2020"
         
-        easyButton.position = CGPoint(x: size.width/2, y: size.height/2)
-        mediumButton.position = CGPoint(x: size.width/2, y: size.height/2 - easyButton.fontSize*2)
-        hardButton.position = CGPoint(x: size.width/2, y: size.height/2 - mediumButton.fontSize*4)
-        twentyButton.position = CGPoint(x: size.width/2, y: size.height/2 - hardButton.fontSize*6)
+        easyButton.position = CGPoint(x: size.width/2, y: size.height/2+150)
+        mediumButton.position = CGPoint(x: size.width/2, y: size.height/2+50)
+        hardButton.position = CGPoint(x: size.width/2, y: size.height/2-50 )
+        twentyButton.position = CGPoint(x: size.width/2, y: size.height/2-150)
         
         addChild(easyButton)
         addChild(mediumButton)
         addChild(hardButton)
         addChild(twentyButton)
+    
+        let path = Bundle.main.path(forResource: "SUPERMARKET MUSIC Royalty-free - Bit Orchestra", ofType: "mp3")!
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            backgroundMusic = try AVAudioPlayer(contentsOf: url)
+            backgroundMusic?.play()
+        }  catch {
+            // couldn't load file :(
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
