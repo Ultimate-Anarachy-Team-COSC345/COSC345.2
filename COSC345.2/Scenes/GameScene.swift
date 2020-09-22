@@ -92,6 +92,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         lifelabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         addChild(lifelabel)
         
+        
         if gameDifficulty == "easy" {
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector:
             #selector(randomSpawningFunction), userInfo: nil, repeats: true)
@@ -109,7 +110,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10000)) {
             self.spawnMask(x: 0)
         }
-        
         
         monster.physicsBody?.categoryBitMask = PhysicsCategory.monsterCategory
         food.physicsBody?.categoryBitMask = PhysicsCategory.foodCategory
@@ -525,272 +525,95 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  - returns: the node which collided with the player is removed
  */
     public func didBegin(_ contact: SKPhysicsContact) {
-        var firstBody:SKPhysicsBody
-        var secondBody:SKPhysicsBody
-        if contact.bodyA.categoryBitMask > contact.bodyB.categoryBitMask{
-            firstBody = contact.bodyA
-            secondBody = contact.bodyB
+        if contact.bodyA.node?.name == "food" {
+            updateScoreValue(value: 10)
+            contact.bodyA.node?.removeFromParent()
         }
-        else{
-            firstBody = contact.bodyB
-            secondBody = contact.bodyA
+        if contact.bodyB.node?.name == "food" {
+            updateScoreValue(value: 10)
+            contact.bodyB.node?.removeFromParent()
         }
-        if (firstBody.categoryBitMask & PhysicsCategory.monsterCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0{
-            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
-            if firstBody.node?.name == "food" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "monster" {
-                updateLifeValue(value: 1)
-            } else if firstBody.node?.name == "hamsteak" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "handsanitiser" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "toiletpaper" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "croissant" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "mask" {
-                if lifeCount == 3 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3 <3"
-                }
-                if lifeCount == 2 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3"
-                }
-                if lifeCount == 1 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3"
-                }
-            } else if firstBody.node?.name == "virus" {
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = GameOverScene(size: self.size, won: false)
-                view?.presentScene(gameOverScene, transition: reveal)
+        if contact.bodyA.node?.name == "monster" {
+            updateLifeValue(value: 1)
+            contact.bodyA.node?.removeFromParent()
+        }
+        if contact.bodyB.node?.name == "monster" {
+            updateLifeValue(value: 1)
+            contact.bodyB.node?.removeFromParent()
+        }
+        if contact.bodyA.node?.name == "hamsteak" {
+            updateScoreValue(value: 10)
+            contact.bodyA.node?.removeFromParent()
+        }
+        if contact.bodyB.node?.name == "hamsteak" {
+            updateScoreValue(value: 10)
+            contact.bodyB.node?.removeFromParent()
+        }
+        if contact.bodyA.node?.name == "handsanitiser" {
+            updateScoreValue(value: 10)
+            contact.bodyA.node?.removeFromParent()
+        }
+        if contact.bodyB.node?.name == "handsanitiser" {
+            updateScoreValue(value: 10)
+            contact.bodyB.node?.removeFromParent()
+        }
+        if contact.bodyA.node?.name == "toiletpaper" {
+            updateScoreValue(value: 10)
+            contact.bodyA.node?.removeFromParent()
+        }
+        if contact.bodyB.node?.name == "toiletpaper" {
+            updateScoreValue(value: 10)
+            contact.bodyB.node?.removeFromParent()
+        }
+        if contact.bodyA.node?.name == "croissant" {
+            updateScoreValue(value: 10)
+            contact.bodyA.node?.removeFromParent()
+        }
+        if contact.bodyB.node?.name == "croissant" {
+            updateScoreValue(value: 10)
+            contact.bodyB.node?.removeFromParent()
+        }
+        if contact.bodyA.node?.name == "mask" {
+            if lifeCount == 3 {
+                lifeCount += 1
+                lifelabel.text = "<3 <3 <3 <3"
             }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.foodCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0 {
-            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
-            if firstBody.node?.name == "food" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "monster" {
-                updateLifeValue(value: 1)
-            } else if firstBody.node?.name == "hamsteak" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "handsanitiser" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "toiletpaper" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "croissant" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "mask" {
-                if lifeCount == 3 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3 <3"
-                }
-                if lifeCount == 2 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3"
-                }
-                if lifeCount == 1 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3"
-                }
-            } else if firstBody.node?.name == "virus" {
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = GameOverScene(size: self.size, won: false)
-                view?.presentScene(gameOverScene, transition: reveal)
+            if lifeCount == 2 {
+                lifeCount += 1
+                lifelabel.text = "<3 <3 <3"
             }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.hamsteakCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0 {
-            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
-            if firstBody.node?.name == "food" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "monster" {
-                updateLifeValue(value: 1)
-            } else if firstBody.node?.name == "hamsteak" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "handsanitiser" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "toiletpaper" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "croissant" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "mask" {
-                if lifeCount == 3 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3 <3"
-                }
-                if lifeCount == 2 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3"
-                }
-                if lifeCount == 1 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3"
-                }
-            } else if firstBody.node?.name == "virus" {
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = GameOverScene(size: self.size, won: false)
-                view?.presentScene(gameOverScene, transition: reveal)
+            if lifeCount == 1 {
+                lifeCount += 1
+                lifelabel.text = "<3 <3"
+            
+        }
+            contact.bodyA.node?.removeFromParent()
+        }
+        if contact.bodyB.node?.name == "mask" {
+            if lifeCount == 3 {
+                lifeCount += 1
+                lifelabel.text = "<3 <3 <3 <3"
             }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.sanitiserCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0 {
-            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
-            if firstBody.node?.name == "food" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "monster" {
-                updateLifeValue(value: 1)
-            } else if firstBody.node?.name == "hamsteak" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "handsanitiser" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "toiletpaper" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "croissant" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "mask" {
-                if lifeCount == 3 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3 <3"
-                }
-                if lifeCount == 2 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3"
-                }
-                if lifeCount == 1 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3"
-                }
-            } else if firstBody.node?.name == "virus" {
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = GameOverScene(size: self.size, won: false)
-                view?.presentScene(gameOverScene, transition: reveal)
+            if lifeCount == 2 {
+                lifeCount += 1
+                lifelabel.text = "<3 <3 <3"
             }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.toiletpaperCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0 {
-            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
-            if firstBody.node?.name == "food" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "monster" {
-                updateLifeValue(value: 1)
-            } else if firstBody.node?.name == "hamsteak" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "handsanitiser" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "toiletpaper" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "croissant" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "mask" {
-                if lifeCount == 3 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3 <3"
-                }
-                if lifeCount == 2 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3"
-                }
-                if lifeCount == 1 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3"
-                }
-            } else if firstBody.node?.name == "virus" {
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = GameOverScene(size: self.size, won: false)
-                view?.presentScene(gameOverScene, transition: reveal)
+            if lifeCount == 1 {
+                lifeCount += 1
+                lifelabel.text = "<3 <3"
+            
             }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.croissantCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0 {
-            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
-            if firstBody.node?.name == "food" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "monster" {
-                updateLifeValue(value: 1)
-            } else if firstBody.node?.name == "hamsteak" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "handsanitiser" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "toiletpaper" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "croissant" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "mask" {
-                if lifeCount == 3 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3 <3"
-                }
-                if lifeCount == 2 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3"
-                }
-                if lifeCount == 1 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3"
-                }
-            } else if firstBody.node?.name == "virus" {
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = GameOverScene(size: self.size, won: false)
-                view?.presentScene(gameOverScene, transition: reveal)
-            }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.maskCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0 {
-            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
-            if firstBody.node?.name == "food" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "monster" {
-                updateLifeValue(value: 1)
-            } else if firstBody.node?.name == "hamsteak" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "handsanitiser" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "toiletpaper" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "croissant" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "mask" {
-                if lifeCount == 3 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3 <3"
-                }
-                if lifeCount == 2 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3"
-                }
-                if lifeCount == 1 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3"
-                }
-            } else if firstBody.node?.name == "virus" {
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = GameOverScene(size: self.size, won: false)
-                view?.presentScene(gameOverScene, transition: reveal)
-            }
-        } else if (firstBody.categoryBitMask & PhysicsCategory.virusCategory) != 0 && (secondBody.categoryBitMask & PhysicsCategory.playerCategory) != 0 {
-            projectileDidCollideWithPlayer(nodeA: firstBody.node as! SKSpriteNode, nodeB: secondBody.node as! SKSpriteNode)
-            if firstBody.node?.name == "food" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "monster" {
-                updateLifeValue(value: 1)
-            } else if firstBody.node?.name == "hamsteak" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "handsanitiser" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "toiletpaper" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "croissant" {
-                updateScoreValue(value: 10)
-            } else if firstBody.node?.name == "mask" {
-                if lifeCount == 3 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3 <3"
-                }
-                if lifeCount == 2 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3 <3"
-                }
-                if lifeCount == 1 {
-                    lifeCount += 1
-                    lifelabel.text = "<3 <3"
-                }
-            } else if firstBody.node?.name == "virus" {
-                let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-                let gameOverScene = GameOverScene(size: self.size, won: false)
-                view?.presentScene(gameOverScene, transition: reveal)
-            }
+            contact.bodyB.node?.removeFromParent()
+        }
+        if contact.bodyA.node?.name == "virus" {
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: false)
+            view?.presentScene(gameOverScene, transition: reveal)
+        }
+        if contact.bodyB.node?.name == "virus" {
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: false)
+            view?.presentScene(gameOverScene, transition: reveal)
         }
     }
 }

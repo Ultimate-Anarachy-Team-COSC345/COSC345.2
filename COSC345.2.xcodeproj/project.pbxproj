@@ -61,7 +61,7 @@
 		961DAF3124DE752F00AF159A /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		961DAF3324DE757200AF159A /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		9677463D250C61CF00600CD0 /* DifficultyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyScene.swift; sourceTree = "<group>"; };
-		9677464125118ECC00600CD0 /* SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3"; path = "../../../../Downloads/SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3"; sourceTree = "<group>"; };
+		9677464125118ECC00600CD0 /* SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3"; path = "../../../../Users/brittanyduncan/Downloads/SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3"; sourceTree = DEVELOPER_DIR; };
 		9677464525119BB000600CD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
