@@ -6,7 +6,7 @@
 //  Copyright © 2020 makayla montgomery. All rights reserved.
 //
 
-import Foundation
+//import Foundation
 import SpriteKit
 import AVFoundation
 
@@ -42,8 +42,8 @@ class DifficultyScene: SKScene {
         addChild(mediumButton)
         addChild(hardButton)
         addChild(twentyButton)
-    
-        let path = Bundle.main.path(forResource: "SUPERMARKET MUSIC Royalty-free - Bit Orchestra", ofType: "mp3")!
+    /*
+        let path = Bundle.main.path(forResource: "SUPERMARKET MUSIC", ofType: "mp3")!
         let url = URL(fileURLWithPath: path)
         
         do {
@@ -52,6 +52,7 @@ class DifficultyScene: SKScene {
         }  catch {
             // couldn't load file :(
         }
+ */
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -1,6 +1,7 @@
 import SpriteKit
 import GameplayKit
 import UIKit
+import AVFoundation
 
 public class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameDifficulty:String?
@@ -13,16 +14,17 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var backgroundMusic: AVAudioPlayer?
     var background = SKSpriteNode(imageNamed:"BackgroundCovid")
     var touchLocation = CGPoint()
     var shape = CGPoint()
     var count = 0
     let label = SKLabelNode(fontNamed: "Arial-BoldMT")
-    var score: Int=0
+    var score: Int = 0
     
-    let lifelabel = SKLabelNode(fontNamed: "Arial-BoldMT")
+    let lifeLabel = SKLabelNode(fontNamed: "Arial-BoldMT")
     var life: String="<3 <3 <3"
-    var lifeCount: Int=3
+    var lifeCount: Int = 3
 
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
@@ -31,15 +33,20 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         return UIScreen.main.bounds.height
     }
     
-    let player = SKSpriteNode(imageNamed: "Player")
+    let player = SKSpriteNode(imageNamed: "player_male")
     let monster = SKSpriteNode(imageNamed: "Karen Sprite2.1 transparent")
     let food = SKSpriteNode(imageNamed: "Image")
-    let hamsteak = SKSpriteNode(color: UIColor.green, size: CGSize(width: 40, height:40))
-    let handsanitiser = SKSpriteNode(color: UIColor.black, size: CGSize(width: 40, height:40))
-    let toiletpaper = SKSpriteNode(color: UIColor.brown, size: CGSize(width:40, height:40))
-    let croissant = SKSpriteNode(color: UIColor.purple, size: CGSize(width:40, height:40))
+    let hamsteak = SKSpriteNode(imageNamed: "hamsteak")
+    let handsanitiser = SKSpriteNode(imageNamed: "handsanitiser")
+    let toiletpaper = SKSpriteNode(imageNamed: "TP")
+    let worker = SKSpriteNode(imageNamed: "supermarketworker")
     let mask = SKSpriteNode(color: UIColor.blue, size: CGSize(width:40, height:40))
-    let virus = SKSpriteNode(imageNamed: "virus2.0")
+    let virus = SKSpriteNode(imageNamed: "Virus")
+    
+    let soundNode = SKNode()
+    let foodPickup = SKAction.playSoundFileNamed("foodPickup.mp3", waitForCompletion: false)
+    let loseLife = SKAction.playSoundFileNamed("loseLife.mp3", waitForCompletion: false)
+    let gainLife = SKAction.playSoundFileNamed("gainLife.mp3", waitForCompletion: false)
     
     struct PhysicsCategory {
         static let none               :UInt32 = 0
@@ -48,7 +55,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         static let hamsteakCategory   :UInt32 = 0x1 << 1
         static let sanitiserCategory  :UInt32 = 0x1 << 1
         static let toiletpaperCategory:UInt32 = 0x1 << 1
-        static let croissantCategory  :UInt32 = 0x1 << 1
+        static let workerCategory  :UInt32 = 0x1 << 1
         static let maskCategory       :UInt32 = 0x1 << 1
         static let virusCategory      :UInt32 = 0x1 << 1
         static let playerCategory     :UInt32 = 0x1 << 0
@@ -68,10 +75,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         backgroundColor = UIColor.black
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        player.size = CGSize(width: 60, height: 60)
+        player.size = CGSize(width: 50, height: 120)
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         player.position = CGPoint(x: 0, y: -screenHeight/3)
-        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2)
+        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 60))
         player.physicsBody?.affectedByGravity = false
         player.physicsBody?.isDynamic = false
         player.zPosition = 0
@@ -80,17 +87,17 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         
         label.fontColor = UIColor.black
         label.fontSize = 32
-        label.text = "Score: \(score)"
-        label.position = CGPoint(x: frame.minX, y: frame.minY)
+        label.text = "Score: " + String(score)
+        label.position = CGPoint(x: frame.minX, y: frame.maxY/1.15)
         label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         addChild(label)
         
-        lifelabel.fontColor = UIColor.red
-        lifelabel.fontSize = 32
-        lifelabel.text = life
-        lifelabel.position = CGPoint(x: frame.maxX, y: frame.minY)
-        lifelabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        addChild(lifelabel)
+        lifeLabel.fontColor = UIColor.red
+        lifeLabel.fontSize = 32
+        lifeLabel.text = life
+        lifeLabel.position = CGPoint(x: frame.maxX, y: frame.maxY/1.15)
+        lifeLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+        addChild(lifeLabel)
         
         
         if gameDifficulty == "easy" {
@@ -116,7 +123,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         hamsteak.physicsBody?.categoryBitMask = PhysicsCategory.hamsteakCategory
         handsanitiser.physicsBody?.categoryBitMask = PhysicsCategory.sanitiserCategory
         toiletpaper.physicsBody?.categoryBitMask = PhysicsCategory.toiletpaperCategory
-        croissant.physicsBody?.categoryBitMask = PhysicsCategory.croissantCategory
+        worker.physicsBody?.categoryBitMask = PhysicsCategory.workerCategory
         mask.physicsBody?.categoryBitMask = PhysicsCategory.maskCategory
         virus.physicsBody?.categoryBitMask = PhysicsCategory.virusCategory
         player.physicsBody?.categoryBitMask = PhysicsCategory.playerCategory
@@ -125,14 +132,14 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         hamsteak.physicsBody?.collisionBitMask = PhysicsCategory.none
         handsanitiser.physicsBody?.collisionBitMask = PhysicsCategory.none
         toiletpaper.physicsBody?.collisionBitMask = PhysicsCategory.none
-        croissant.physicsBody?.collisionBitMask = PhysicsCategory.none
+        worker.physicsBody?.collisionBitMask = PhysicsCategory.none
         mask.physicsBody?.collisionBitMask = PhysicsCategory.none
         virus.physicsBody?.collisionBitMask = PhysicsCategory.none
         monster.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
         food.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
         hamsteak.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
         toiletpaper.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
-        croissant.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
+        worker.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
         mask.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
         virus.physicsBody?.contactTestBitMask = PhysicsCategory.playerCategory
         player.physicsBody?.contactTestBitMask = 2
@@ -142,6 +149,18 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         background.zPosition = -1
         addChild(background)
         addSwipeGestureRecognizers()
+        
+        let path = Bundle.main.path(forResource: "SUPERMARKET MUSIC", ofType: "mp3")!
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            backgroundMusic = try AVAudioPlayer(contentsOf: url)
+            backgroundMusic?.numberOfLoops = -1
+            backgroundMusic?.play()
+        }  catch {
+            // couldn't load file :(
+        }
+        addChild(soundNode)
     }
     
     /**
@@ -163,7 +182,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             } else if randomInt2 == 4 {
                 spawnToiletpaper(x: -(screenWidth/6))
             } else if randomInt2 == 5 {
-                spawnCroissant(x: -(screenWidth/6))
+                spawnworker(x: -(screenWidth/6))
             } else if randomInt2 == 6 {
                 spawnVirus(x: -(screenWidth/6))
             }
@@ -179,7 +198,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             } else if randomInt2 == 4 {
                 spawnToiletpaper(x: -(screenWidth/3))
             } else if randomInt2 == 5 {
-                spawnCroissant(x: -(screenWidth/3))
+                spawnworker(x: -(screenWidth/3))
             } else if randomInt2 == 6 {
                 spawnVirus(x: -(screenWidth/3))
             }
@@ -195,7 +214,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             } else if randomInt2 == 4 {
                 spawnToiletpaper(x: 0)
             } else if randomInt2 == 5 {
-                spawnCroissant(x: 0)
+                spawnworker(x: 0)
             } else if randomInt2 == 6 {
                 spawnVirus(x: 0)
             }
@@ -211,7 +230,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             } else if randomInt2 == 4 {
                 spawnToiletpaper(x: (screenWidth/3))
             } else if randomInt2 == 5 {
-                spawnCroissant(x: (screenWidth/3))
+                spawnworker(x: (screenWidth/3))
             } else if randomInt2 == 6 {
                 spawnVirus(x: (screenWidth/3))
             }
@@ -227,7 +246,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             } else if randomInt2 == 4 {
                 spawnToiletpaper(x: (screenWidth/6))
             } else if randomInt2 == 5 {
-                spawnCroissant(x: (screenWidth/6))
+                spawnworker(x: (screenWidth/6))
             } else if randomInt2 == 6 {
                 spawnVirus(x: (screenWidth/6))
             }
@@ -267,7 +286,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  */
    public func spawnMonster(x: CGFloat) {
         if let monsterCopy = monster.copy() as? SKSpriteNode {
-            monsterCopy.size = CGSize(width: 40, height: 40)
+            monsterCopy.size = CGSize(width: 35, height: 50)
             monsterCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             monsterCopy.position = CGPoint(x: x, y: screenHeight/2)
             monsterCopy.zPosition = 0
@@ -284,7 +303,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     public func spawnHamsteak(x: CGFloat) {
         if let hamsteakCopy = hamsteak.copy() as? SKSpriteNode {
-            hamsteakCopy.size = CGSize(width: 40, height: 40)
+            hamsteakCopy.size = CGSize(width: 60, height: 60)
             hamsteakCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             hamsteakCopy.position = CGPoint(x: x, y: screenHeight/2)
             hamsteakCopy.zPosition = 0
@@ -301,11 +320,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     public func spawnHandsanitiser(x: CGFloat) {
         if let handsanitiserCopy = handsanitiser.copy() as? SKSpriteNode {
-            handsanitiserCopy.size = CGSize(width: 40, height: 40)
+            handsanitiserCopy.size = CGSize(width: 60, height: 60)
             handsanitiserCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             handsanitiserCopy.position = CGPoint(x: x, y: screenHeight/2)
             handsanitiserCopy.zPosition = 0
-            handsanitiserCopy.physicsBody = SKPhysicsBody(circleOfRadius: handsanitiser.size.width/6)
+            handsanitiserCopy.physicsBody = SKPhysicsBody(rectangleOf: handsanitiserCopy.size)
             handsanitiserCopy.physicsBody?.affectedByGravity = false
             handsanitiserCopy.physicsBody?.linearDamping = 0
             handsanitiserCopy.physicsBody?.isDynamic = true
@@ -333,20 +352,20 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    public func spawnCroissant(x: CGFloat) {
-        if let croissantCopy = croissant.copy() as? SKSpriteNode {
-            croissantCopy.size = CGSize(width: 40, height: 40)
-            croissantCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            croissantCopy.position = CGPoint(x: x, y: screenHeight/2)
-            croissantCopy.zPosition = 0
-            croissantCopy.physicsBody = SKPhysicsBody(circleOfRadius: croissant.size.width/6)
-            croissantCopy.physicsBody?.affectedByGravity = false
-            croissantCopy.physicsBody?.linearDamping = 0
-            croissantCopy.physicsBody?.isDynamic = true
-            croissantCopy.physicsBody?.usesPreciseCollisionDetection = true
-            croissantCopy.physicsBody?.velocity = CGVector(dx: 0, dy: -250)
-            croissantCopy.name = "croissant"
-            addChild(croissantCopy)
+    public func spawnworker(x: CGFloat) {
+        if let workerCopy = worker.copy() as? SKSpriteNode {
+            workerCopy.size = CGSize(width: 90, height: 90)
+            workerCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            workerCopy.position = CGPoint(x: x, y: screenHeight/2)
+            workerCopy.zPosition = 0
+            workerCopy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 40))
+            workerCopy.physicsBody?.affectedByGravity = false
+            workerCopy.physicsBody?.linearDamping = 0
+            workerCopy.physicsBody?.isDynamic = true
+            workerCopy.physicsBody?.usesPreciseCollisionDetection = true
+            workerCopy.physicsBody?.velocity = CGVector(dx: 0, dy: -250)
+            workerCopy.name = "worker"
+            addChild(workerCopy)
         }
     }
     
@@ -369,7 +388,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     public func spawnVirus(x: CGFloat) {
         if let virusCopy = virus.copy() as? SKSpriteNode {
-            virusCopy.size = CGSize(width: 100, height: 100)
+            virusCopy.size = CGSize(width: 60, height: 60)
             virusCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             virusCopy.position = CGPoint(x: x, y: screenHeight/2)
             virusCopy.zPosition = 0
@@ -474,12 +493,13 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  */
    public func updateScoreValue(value: Int) {
         score += value
-        if score == 250 {
+        if score >= 2020 {
             let reveal = SKTransition.flipVertical(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: true)
             view?.presentScene(gameOverScene, transition: reveal)
+            backgroundMusic?.stop()
         }
-        label.text = "Score: \(score)"
+        label.text = "Score: " + String(score)
     }
     
     /**
@@ -494,18 +514,19 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             view?.presentScene(gameOverScene, transition: reveal)
+            backgroundMusic?.stop()
         }
     if lifeCount == 4 {
-        lifelabel.text = "<3 <3 <3 <3"
+        lifeLabel.text = "<3 <3 <3 <3"
     }
     if lifeCount == 3 {
-        lifelabel.text = "<3 <3 <3"
+        lifeLabel.text = "<3 <3 <3"
     }
         if lifeCount == 2 {
-            lifelabel.text = "<3 <3"
+            lifeLabel.text = "<3 <3"
         }
         if lifeCount == 1 {
-            lifelabel.text = "<3"
+            lifeLabel.text = "<3"
         }
     }
     /**
@@ -526,94 +547,94 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  */
     public func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "food" {
+            soundNode.run(foodPickup)
             updateScoreValue(value: 10)
             contact.bodyA.node?.removeFromParent()
         }
         if contact.bodyB.node?.name == "food" {
+            soundNode.run(foodPickup)
             updateScoreValue(value: 10)
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node?.name == "monster" {
+            soundNode.run(loseLife)
             updateLifeValue(value: 1)
             contact.bodyA.node?.removeFromParent()
         }
         if contact.bodyB.node?.name == "monster" {
+            soundNode.run(loseLife)
             updateLifeValue(value: 1)
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node?.name == "hamsteak" {
-            updateScoreValue(value: 10)
+            soundNode.run(foodPickup)
+            updateScoreValue(value: 15)
             contact.bodyA.node?.removeFromParent()
         }
         if contact.bodyB.node?.name == "hamsteak" {
-            updateScoreValue(value: 10)
+            soundNode.run(foodPickup)
+            updateScoreValue(value: 15)
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node?.name == "handsanitiser" {
-            updateScoreValue(value: 10)
+            soundNode.run(gainLife)
+            if lifeCount < 4{
+                lifeCount += 1
+                lifeLabel.text =  life + String(" <3")
+            }
             contact.bodyA.node?.removeFromParent()
         }
         if contact.bodyB.node?.name == "handsanitiser" {
-            updateScoreValue(value: 10)
+            soundNode.run(gainLife)
+            if lifeCount < 4{
+                lifeCount += 1
+                lifeLabel.text =  life + String(" <3")
+            }
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node?.name == "toiletpaper" {
-            updateScoreValue(value: 10)
+            soundNode.run(foodPickup)
+            updateScoreValue(value: 5)
             contact.bodyA.node?.removeFromParent()
         }
         if contact.bodyB.node?.name == "toiletpaper" {
-            updateScoreValue(value: 10)
+            soundNode.run(foodPickup)
+            updateScoreValue(value: 5)
             contact.bodyB.node?.removeFromParent()
         }
-        if contact.bodyA.node?.name == "croissant" {
-            updateScoreValue(value: 10)
+        if contact.bodyA.node?.name == "worker" {
+            soundNode.run(foodPickup)
+            updateScoreValue(value: -10)
             contact.bodyA.node?.removeFromParent()
         }
-        if contact.bodyB.node?.name == "croissant" {
-            updateScoreValue(value: 10)
+        if contact.bodyB.node?.name == "worker" {
+            soundNode.run(foodPickup)
+            updateScoreValue(value: -10)
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node?.name == "mask" {
-            if lifeCount == 3 {
-                lifeCount += 1
-                lifelabel.text = "<3 <3 <3 <3"
-            }
-            if lifeCount == 2 {
-                lifeCount += 1
-                lifelabel.text = "<3 <3 <3"
-            }
-            if lifeCount == 1 {
-                lifeCount += 1
-                lifelabel.text = "<3 <3"
-            
-        }
+            soundNode.run(gainLife)
+            lifeCount = 4
+            lifeLabel.text = "<3 <3 <3 <3"
             contact.bodyA.node?.removeFromParent()
         }
         if contact.bodyB.node?.name == "mask" {
-            if lifeCount == 3 {
-                lifeCount += 1
-                lifelabel.text = "<3 <3 <3 <3"
-            }
-            if lifeCount == 2 {
-                lifeCount += 1
-                lifelabel.text = "<3 <3 <3"
-            }
-            if lifeCount == 1 {
-                lifeCount += 1
-                lifelabel.text = "<3 <3"
-            
-            }
+            soundNode.run(gainLife)
+            lifeCount = 4
+            lifeLabel.text = "<3 <3 <3 <3"
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node?.name == "virus" {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             view?.presentScene(gameOverScene, transition: reveal)
+            backgroundMusic?.stop()
         }
         if contact.bodyB.node?.name == "virus" {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             view?.presentScene(gameOverScene, transition: reveal)
+            backgroundMusic?.stop()
         }
     }
 }

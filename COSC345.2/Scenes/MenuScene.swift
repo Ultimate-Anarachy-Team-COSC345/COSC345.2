@@ -5,7 +5,7 @@
 //  Created by Brittany Duncan on 7/08/20.
 //
 
-import Foundation
+//import Foundation
 import SpriteKit
 import AVFoundation
 
@@ -26,7 +26,13 @@ public class MenuScene: SKScene {
         background.zPosition = -1
         addChild(background)
         
-        let path = Bundle.main.path(forResource: "SUPERMARKET MUSIC Royalty-free - Bit Orchestra", ofType: "mp3")!
+    }
+        public required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func didMove(to view: SKView) {
+        let path = Bundle.main.path(forResource: "SUPERMARKET MUSIC", ofType: "mp3")!
         let url = URL(fileURLWithPath: path)
         
         do {
@@ -35,9 +41,6 @@ public class MenuScene: SKScene {
         }  catch {
             // couldn't load file :(
         }
-    }
-        public required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

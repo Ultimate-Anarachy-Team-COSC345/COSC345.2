@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "E27A79F5-8AE7-4000-97A8-444F708F9255"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "674CFBAD-90C8-44F1-A195-2AE28402D880"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "COSC345.2/Scenes/GameScene.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "PhysicsCategory"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "674CFBAD-90C8-44F1-A195-2AE28402D880 - 9ba9cd87d60fa06d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "globalinit_017_D9A0D175CD03D5B2B14E03A7BC0A5FB57_func5"
+                  moduleName = "COSC345.2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ianmclennan/Documents/Makoto/COSC345.2-master/COSC345.2/Scenes/GameScene.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "13">
+               </Location>
+               <Location
+                  uuid = "674CFBAD-90C8-44F1-A195-2AE28402D880 - 522795285f85ad77"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "COSC345_2.GameScene.PhysicsCategory.toiletpaperCategory.unsafeMutableAddressor : Swift.UInt32"
+                  moduleName = "COSC345.2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ianmclennan/Documents/Makoto/COSC345.2-master/COSC345.2/Scenes/GameScene.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

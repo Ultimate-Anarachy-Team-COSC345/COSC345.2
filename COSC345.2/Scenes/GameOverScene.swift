@@ -13,7 +13,7 @@ public class GameOverScene: SKScene {
         // 1
         backgroundColor = SKColor.black
         // 2
-        let message = won ? "You Murdered the Elderly!" : "Haha you suck :["
+        let message = won ? "Congratulations!\nYou Murdered the Elderly!" : "Haha you suck :["
         // 3
         let label = SKLabelNode(fontNamed: "Chalkduster")
         label.text = message
@@ -33,6 +33,15 @@ public class GameOverScene: SKScene {
             }
             ]))
     }
+    let soundNode = SKNode()
+    let gameOverVoice = SKAction.playSoundFileNamed("gameOverVoice.mp3", waitForCompletion: false)
+    public override func didMove(to view: SKView) {
+      addChild(soundNode)
+        soundNode.run(gameOverVoice)
+    }
+    var score: Int = 0
+    
+    
     // 6
     public required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

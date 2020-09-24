@@ -14,13 +14,17 @@
 		5AC92C0B2464B6A200865698 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC92C092464B6A200865698 /* LaunchScreen.storyboard */; };
 		5AC92C162464B6A200865698 /* COSC345_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92C152464B6A200865698 /* COSC345_2Tests.swift */; };
 		5AC92C212464B6A200865698 /* COSC345_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92C202464B6A200865698 /* COSC345_2UITests.swift */; };
+		5C3C37D22519E1A6002188A8 /* SUPERMARKET MUSIC.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5C3C37D12519E1A6002188A8 /* SUPERMARKET MUSIC.mp3 */; };
+		5C3C37DA251AF900002188A8 /* foodPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5C3C37D9251AF900002188A8 /* foodPickup.mp3 */; };
+		5C3C37DF251B0857002188A8 /* loseLife.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5C3C37DE251B0857002188A8 /* loseLife.mp3 */; };
+		5C3C37E4251C4ED2002188A8 /* gainLife.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5C3C37E3251C4ED2002188A8 /* gainLife.mp3 */; };
+		5C3C37E9251C515E002188A8 /* gameOverVoice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5C3C37E8251C515E002188A8 /* gameOverVoice.mp3 */; };
 		9617859324E3EA9F009CB65C /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9617859224E3EA9F009CB65C /* SpriteKit.framework */; };
 		961A432C24E91A7600B4A617 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A432B24E91A7600B4A617 /* UIKit.framework */; };
 		961A432E24E91A9100B4A617 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961A432D24E91A9100B4A617 /* GameplayKit.framework */; };
 		961DAF3224DE752F00AF159A /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DAF3124DE752F00AF159A /* MenuScene.swift */; };
 		961DAF3424DE757200AF159A /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DAF3324DE757200AF159A /* GameOverScene.swift */; };
 		9677463E250C61CF00600CD0 /* DifficultyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9677463D250C61CF00600CD0 /* DifficultyScene.swift */; };
-		9677464225118ECC00600CD0 /* SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9677464125118ECC00600CD0 /* SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3 */; };
 		9677464625119BB100600CD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9677464525119BB000600CD0 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -55,13 +59,17 @@
 		5AC92C1C2464B6A200865698 /* COSC345.2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = COSC345.2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC92C202464B6A200865698 /* COSC345_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COSC345_2UITests.swift; sourceTree = "<group>"; };
 		5AC92C222464B6A200865698 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C3C37D12519E1A6002188A8 /* SUPERMARKET MUSIC.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "SUPERMARKET MUSIC.mp3"; sourceTree = "<group>"; };
+		5C3C37D9251AF900002188A8 /* foodPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = foodPickup.mp3; sourceTree = "<group>"; };
+		5C3C37DE251B0857002188A8 /* loseLife.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = loseLife.mp3; sourceTree = "<group>"; };
+		5C3C37E3251C4ED2002188A8 /* gainLife.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gainLife.mp3; sourceTree = "<group>"; };
+		5C3C37E8251C515E002188A8 /* gameOverVoice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameOverVoice.mp3; sourceTree = "<group>"; };
 		9617859224E3EA9F009CB65C /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		961A432B24E91A7600B4A617 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		961A432D24E91A9100B4A617 /* GameplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameplayKit.framework; path = System/Library/Frameworks/GameplayKit.framework; sourceTree = SDKROOT; };
 		961DAF3124DE752F00AF159A /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		961DAF3324DE757200AF159A /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		9677463D250C61CF00600CD0 /* DifficultyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyScene.swift; sourceTree = "<group>"; };
-		9677464125118ECC00600CD0 /* SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3"; path = "../../../../Users/brittanyduncan/Downloads/SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3"; sourceTree = DEVELOPER_DIR; };
 		9677464525119BB000600CD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,9 +175,9 @@
 			isa = PBXGroup;
 			children = (
 				9677464525119BB000600CD0 /* Assets.xcassets */,
-				9677464125118ECC00600CD0 /* SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3 */,
 				5AC92C042464B6A200865698 /* Main.storyboard */,
 				5AC92C092464B6A200865698 /* LaunchScreen.storyboard */,
+				5C3C37D02519E1A6002188A8 /* Sounds */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -180,6 +188,18 @@
 				5AC92BFA2464B6A200865698 /* AppDelegate.swift */,
 			);
 			path = Template;
+			sourceTree = "<group>";
+		};
+		5C3C37D02519E1A6002188A8 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				5C3C37D9251AF900002188A8 /* foodPickup.mp3 */,
+				5C3C37DE251B0857002188A8 /* loseLife.mp3 */,
+				5C3C37D12519E1A6002188A8 /* SUPERMARKET MUSIC.mp3 */,
+				5C3C37E3251C4ED2002188A8 /* gainLife.mp3 */,
+				5C3C37E8251C515E002188A8 /* gameOverVoice.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		9617859124E3EA9E009CB65C /* Frameworks */ = {
@@ -300,9 +320,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AC92C062464B6A200865698 /* Main.storyboard in Resources */,
-				9677464225118ECC00600CD0 /* SUPERMARKET MUSIC Royalty-free - Bit Orchestra.mp3 in Resources */,
+				5C3C37E4251C4ED2002188A8 /* gainLife.mp3 in Resources */,
+				5C3C37DF251B0857002188A8 /* loseLife.mp3 in Resources */,
+				5C3C37E9251C515E002188A8 /* gameOverVoice.mp3 in Resources */,
 				9677464625119BB100600CD0 /* Assets.xcassets in Resources */,
 				5AC92C0B2464B6A200865698 /* LaunchScreen.storyboard in Resources */,
+				5C3C37D22519E1A6002188A8 /* SUPERMARKET MUSIC.mp3 in Resources */,
+				5C3C37DA251AF900002188A8 /* foodPickup.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
