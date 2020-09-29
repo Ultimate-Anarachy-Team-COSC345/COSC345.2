@@ -37,41 +37,41 @@ public class COSC345_2Tests: XCTestCase {
     
     func testGameSceneDidLoad() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         XCTAssertNotNil(gamescene)
     }
     
     func testRandomNumberGenerator() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         let int: Int=gamescene.randomNumber(range: 1...5)
         XCTAssertTrue(int > 0 && int < 6)
     }
     
     func testRandomNumberGenerator2() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         let int: Int=gamescene.randomNumber2(range: 1...2)
         XCTAssertTrue(int > 0 && int < 3)
     }
     
     func testSpawnMonster() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         let monsterCopy = gamescene.spawnMonster(x: 0)
         XCTAssertNotNil(monsterCopy)
     }
     
     func testSpawnFood() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         let foodCopy = gamescene.spawnFood(x: 0)
         XCTAssertNotNil(foodCopy)
     }
     
     func testupdateScoreValue() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         let score: Int=10
         gamescene.updateScoreValue(value: 10)
         XCTAssertEqual(score, gamescene.score)
@@ -83,7 +83,7 @@ public class COSC345_2Tests: XCTestCase {
     
     func testUpdateLifeValue() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         let lifeCount: Int=2
         gamescene.updateLifeValue(value: 1)
         XCTAssertEqual(lifeCount, gamescene.lifeCount)
@@ -95,7 +95,7 @@ public class COSC345_2Tests: XCTestCase {
 
     func testScreenDimensions() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         let width: CGFloat=gamescene.screenWidth
         let height: CGFloat=gamescene.screenHeight
         XCTAssertTrue(width > 0 && height > 0)
@@ -103,7 +103,7 @@ public class COSC345_2Tests: XCTestCase {
     
     func testRandomSpawningFunciton() {
         let testView = SKView()
-        let gamescene = GameScene(size: testView.bounds.size)
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         gamescene.randomSpawningFunction()
         XCTAssertTrue(gamescene.randomNumber() > 0 && gamescene.randomNumber2() > 0)
     }
