@@ -15,7 +15,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     var backgroundMusic: AVAudioPlayer?
-    var background = SKSpriteNode(imageNamed:"BackgroundCovid")
+    var background = SKSpriteNode(imageNamed:"UpdatedBackground")
     var touchLocation = CGPoint()
     var shape = CGPoint()
     var count = 0
@@ -34,13 +34,14 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     let player = SKSpriteNode(imageNamed: "player_male")
-    let monster = SKSpriteNode(imageNamed: "Karen Sprite2.1 transparent")
+    let monster = SKSpriteNode(imageNamed: "karen")
     let food = SKSpriteNode(imageNamed: "Image")
     let hamsteak = SKSpriteNode(imageNamed: "hamsteak")
     let handsanitiser = SKSpriteNode(imageNamed: "handsanitiser")
     let toiletpaper = SKSpriteNode(imageNamed: "TP")
+   // let toiletpaper = SKSpriteNode(color: UIColor.black, size: CGSize(width: 40, height: 40))
     let worker = SKSpriteNode(imageNamed: "supermarketworker")
-    let mask = SKSpriteNode(color: UIColor.blue, size: CGSize(width:40, height:40))
+    let mask = SKSpriteNode(imageNamed: "mask")
     let virus = SKSpriteNode(imageNamed: "Virus")
     
     let soundNode = SKNode()
@@ -55,7 +56,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         static let hamsteakCategory   :UInt32 = 0x1 << 1
         static let sanitiserCategory  :UInt32 = 0x1 << 1
         static let toiletpaperCategory:UInt32 = 0x1 << 1
-        static let workerCategory  :UInt32 = 0x1 << 1
+        static let workerCategory     :UInt32 = 0x1 << 1
         static let maskCategory       :UInt32 = 0x1 << 1
         static let virusCategory      :UInt32 = 0x1 << 1
         static let playerCategory     :UInt32 = 0x1 << 0
@@ -75,7 +76,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         backgroundColor = UIColor.black
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        player.size = CGSize(width: 50, height: 120)
+        player.size = CGSize(width: 35, height: 100)
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         player.position = CGPoint(x: 0, y: -screenHeight/3)
         player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 60))
@@ -179,11 +180,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
                 spawnHamsteak(x: -(screenWidth/6))
             } else if randomInt2 == 4 {
                 spawnHandsanitiser(x: -(screenWidth/6))
-            } else if randomInt2 == 4 {
-                spawnToiletpaper(x: -(screenWidth/6))
             } else if randomInt2 == 5 {
-                spawnworker(x: -(screenWidth/6))
+                spawnToiletpaper(x: -(screenWidth/6))
             } else if randomInt2 == 6 {
+                spawnworker(x: -(screenWidth/6))
+            } else if randomInt2 == 7 {
                 spawnVirus(x: -(screenWidth/6))
             }
         } else if randomInt == 2 {
@@ -195,11 +196,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
                 spawnHamsteak(x: -(screenWidth/3))
             } else if randomInt2 == 4 {
                 spawnHandsanitiser(x: -(screenWidth/3))
-            } else if randomInt2 == 4 {
-                spawnToiletpaper(x: -(screenWidth/3))
             } else if randomInt2 == 5 {
-                spawnworker(x: -(screenWidth/3))
+                spawnToiletpaper(x: -(screenWidth/3))
             } else if randomInt2 == 6 {
+                spawnworker(x: -(screenWidth/3))
+            } else if randomInt2 == 7 {
                 spawnVirus(x: -(screenWidth/3))
             }
         } else if randomInt == 3 {
@@ -211,11 +212,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
                 spawnHamsteak(x: 0)
             } else if randomInt2 == 4 {
                 spawnHandsanitiser(x: 0)
-            } else if randomInt2 == 4 {
-                spawnToiletpaper(x: 0)
             } else if randomInt2 == 5 {
-                spawnworker(x: 0)
+                spawnToiletpaper(x: 0)
             } else if randomInt2 == 6 {
+                spawnworker(x: 0)
+            } else if randomInt2 == 7 {
                 spawnVirus(x: 0)
             }
         } else if randomInt == 4 {
@@ -227,11 +228,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
                 spawnHamsteak(x: (screenWidth/3))
             } else if randomInt2 == 4 {
                 spawnHandsanitiser(x: (screenWidth/3))
-            } else if randomInt2 == 4 {
-                spawnToiletpaper(x: (screenWidth/3))
             } else if randomInt2 == 5 {
-                spawnworker(x: (screenWidth/3))
+                spawnToiletpaper(x: (screenWidth/3))
             } else if randomInt2 == 6 {
+                spawnworker(x: (screenWidth/3))
+            } else if randomInt2 == 7 {
                 spawnVirus(x: (screenWidth/3))
             }
         } else if randomInt == 5 {
@@ -243,11 +244,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
                 spawnHamsteak(x: (screenWidth/6))
             } else if randomInt2 == 4 {
                 spawnHandsanitiser(x: (screenWidth/6))
-            } else if randomInt2 == 4 {
-                spawnToiletpaper(x: (screenWidth/6))
             } else if randomInt2 == 5 {
-                spawnworker(x: (screenWidth/6))
+                spawnToiletpaper(x: (screenWidth/6))
             } else if randomInt2 == 6 {
+                spawnworker(x: (screenWidth/6))
+            } else if randomInt2 == 7 {
                 spawnVirus(x: (screenWidth/6))
             }
         }
@@ -271,7 +272,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         - range: int between 1 to 2 inclusive
      - returns: a randomly generated int between 1 and 2 inclusive
      */
-   public func randomNumber2(range: ClosedRange<Int> = 1...6) -> Int {
+   public func randomNumber2(range: ClosedRange<Int> = 1...7) -> Int {
         let min = range.lowerBound
         let max = range.upperBound
         return Int(arc4random_uniform(UInt32(1 + max - min))) + min
@@ -286,11 +287,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
  */
    public func spawnMonster(x: CGFloat) {
         if let monsterCopy = monster.copy() as? SKSpriteNode {
-            monsterCopy.size = CGSize(width: 35, height: 50)
+            monsterCopy.size = CGSize(width: 150, height: 100)
             monsterCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             monsterCopy.position = CGPoint(x: x, y: screenHeight/2)
             monsterCopy.zPosition = 0
-            monsterCopy.physicsBody = SKPhysicsBody(circleOfRadius: monster.size.width/6)
+            monsterCopy.physicsBody = SKPhysicsBody(circleOfRadius: monsterCopy.size.width/12)
             monsterCopy.physicsBody?.affectedByGravity = false
             monsterCopy.physicsBody?.linearDamping = 0
             monsterCopy.physicsBody?.isDynamic = true
@@ -307,7 +308,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             hamsteakCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             hamsteakCopy.position = CGPoint(x: x, y: screenHeight/2)
             hamsteakCopy.zPosition = 0
-            hamsteakCopy.physicsBody = SKPhysicsBody(circleOfRadius: hamsteak.size.width/500)
+            hamsteakCopy.physicsBody = SKPhysicsBody(circleOfRadius: hamsteakCopy.size.width/12)
             hamsteakCopy.physicsBody?.affectedByGravity = false
             hamsteakCopy.physicsBody?.linearDamping = 0
             hamsteakCopy.physicsBody?.isDynamic = true
@@ -324,7 +325,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             handsanitiserCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             handsanitiserCopy.position = CGPoint(x: x, y: screenHeight/2)
             handsanitiserCopy.zPosition = 0
-            handsanitiserCopy.physicsBody = SKPhysicsBody(rectangleOf: handsanitiserCopy.size)
+            handsanitiserCopy.physicsBody = SKPhysicsBody(circleOfRadius: handsanitiserCopy.size.width/12)
             handsanitiserCopy.physicsBody?.affectedByGravity = false
             handsanitiserCopy.physicsBody?.linearDamping = 0
             handsanitiserCopy.physicsBody?.isDynamic = true
@@ -337,11 +338,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     public func spawnToiletpaper(x: CGFloat) {
         if let toiletpaperCopy = toiletpaper.copy() as? SKSpriteNode {
-            toiletpaperCopy.size = CGSize(width: 40, height: 40)
+            toiletpaperCopy.size = CGSize(width: 100, height: 100)
             toiletpaperCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             toiletpaperCopy.position = CGPoint(x: x, y: screenHeight/2)
             toiletpaperCopy.zPosition = 0
-            toiletpaperCopy.physicsBody = SKPhysicsBody(circleOfRadius: toiletpaper.size.width/6)
+            toiletpaperCopy.physicsBody = SKPhysicsBody(circleOfRadius: toiletpaperCopy.size.width/12)
             toiletpaperCopy.physicsBody?.affectedByGravity = false
             toiletpaperCopy.physicsBody?.linearDamping = 0
             toiletpaperCopy.physicsBody?.isDynamic = true
@@ -358,7 +359,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             workerCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             workerCopy.position = CGPoint(x: x, y: screenHeight/2)
             workerCopy.zPosition = 0
-            workerCopy.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 40))
+            workerCopy.physicsBody = SKPhysicsBody(circleOfRadius: workerCopy.size.width/18)
             workerCopy.physicsBody?.affectedByGravity = false
             workerCopy.physicsBody?.linearDamping = 0
             workerCopy.physicsBody?.isDynamic = true
@@ -371,11 +372,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     public func spawnMask(x: CGFloat) {
         if let maskCopy = mask.copy() as? SKSpriteNode {
-            maskCopy.size = CGSize(width: 40, height: 40)
+            maskCopy.size = CGSize(width: 60, height: 60)
             maskCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             maskCopy.position = CGPoint(x: x, y: screenHeight/2)
             maskCopy.zPosition = 0
-            maskCopy.physicsBody = SKPhysicsBody(circleOfRadius: mask.size.width/6)
+            maskCopy.physicsBody = SKPhysicsBody(circleOfRadius: maskCopy.size.width/12)
             maskCopy.physicsBody?.affectedByGravity = false
             maskCopy.physicsBody?.linearDamping = 0
             maskCopy.physicsBody?.isDynamic = true
@@ -392,7 +393,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             virusCopy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             virusCopy.position = CGPoint(x: x, y: screenHeight/2)
             virusCopy.zPosition = 0
-            virusCopy.physicsBody = SKPhysicsBody(circleOfRadius: virus.size.width/20)
+            virusCopy.physicsBody = SKPhysicsBody(circleOfRadius: virusCopy.size.width/12)
             virusCopy.physicsBody?.affectedByGravity = false
             virusCopy.physicsBody?.linearDamping = 0
             virusCopy.physicsBody?.isDynamic = true
@@ -416,7 +417,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             foodCopy.size = CGSize(width: 40, height: 40)
             foodCopy.position = CGPoint(x: x, y: screenHeight/2)
             foodCopy.zPosition = 0
-            foodCopy.physicsBody = SKPhysicsBody(circleOfRadius: food.size.width/12)
+            foodCopy.physicsBody = SKPhysicsBody(circleOfRadius: foodCopy.size.width/8)
             foodCopy.physicsBody?.affectedByGravity = false
             foodCopy.physicsBody?.linearDamping = 0
             foodCopy.physicsBody?.isDynamic = true
@@ -548,12 +549,12 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     public func didBegin(_ contact: SKPhysicsContact) {
         if contact.bodyA.node?.name == "food" {
             soundNode.run(foodPickup)
-            updateScoreValue(value: 10)
+            updateScoreValue(value: 15)
             contact.bodyA.node?.removeFromParent()
         }
         if contact.bodyB.node?.name == "food" {
             soundNode.run(foodPickup)
-            updateScoreValue(value: 10)
+            updateScoreValue(value: 15)
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node?.name == "monster" {
@@ -568,12 +569,12 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if contact.bodyA.node?.name == "hamsteak" {
             soundNode.run(foodPickup)
-            updateScoreValue(value: 15)
+            updateScoreValue(value: 10)
             contact.bodyA.node?.removeFromParent()
         }
         if contact.bodyB.node?.name == "hamsteak" {
             soundNode.run(foodPickup)
-            updateScoreValue(value: 15)
+            updateScoreValue(value: 10)
             contact.bodyB.node?.removeFromParent()
         }
         if contact.bodyA.node?.name == "handsanitiser" {

@@ -41,6 +41,12 @@ public class COSC345_2Tests: XCTestCase {
         XCTAssertNotNil(gamescene)
     }
     
+    func testDifficultyScene() {
+        let testView = SKView()
+        let diffScene = DifficultyScene(size: testView.bounds.size)
+        XCTAssertNotNil(diffScene)
+    }
+    
     func testRandomNumberGenerator() {
         let testView = SKView()
         let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
@@ -67,6 +73,48 @@ public class COSC345_2Tests: XCTestCase {
         let gamescene = GameScene(size: testView.bounds.size, difficulty: "easy")
         let foodCopy = gamescene.spawnFood(x: 0)
         XCTAssertNotNil(foodCopy)
+    }
+    
+    func testSpawnHamsteak() {
+        let testView = SKView()
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "medium")
+        let hamsteakCopy = gamescene.spawnHamsteak(x: 0)
+        XCTAssertNotNil(hamsteakCopy)
+    }
+    
+    func testSpawnHandSanitiser() {
+        let testView = SKView()
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "hard")
+        let handsanitiserCopy = gamescene.spawnHandsanitiser(x: 0)
+        XCTAssertNotNil(handsanitiserCopy)
+    }
+    
+    func testSpawnTP() {
+        let testView = SKView()
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "hard")
+        let toiletPaperCopy = gamescene.spawnToiletpaper(x: 0)
+        XCTAssertNotNil(toiletPaperCopy)
+    }
+    
+    func testSpawnWorker() {
+        let testView = SKView()
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "hard")
+        let workerCopy = gamescene.spawnworker(x: 0)
+        XCTAssertNotNil(workerCopy)
+    }
+    
+    func testSpawnMask() {
+        let testView = SKView()
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "hard")
+        let maskCopy = gamescene.spawnMask(x: 0)
+        XCTAssertNotNil(maskCopy)
+    }
+    
+    func testSpawnVirus() {
+        let testView = SKView()
+        let gamescene = GameScene(size: testView.bounds.size, difficulty: "hard")
+        let virusCopy = gamescene.spawnVirus(x: 0)
+        XCTAssertNotNil(virusCopy)
     }
     
     func testupdateScoreValue() {

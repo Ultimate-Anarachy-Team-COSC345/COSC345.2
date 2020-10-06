@@ -13,7 +13,7 @@ public class GameOverScene: SKScene {
         // 1
         backgroundColor = SKColor.black
         // 2
-        let message = won ? "Congratulations!\nYou Murdered the Elderly!" : "Haha you suck :["
+        let message = won ? "You brought into Covid Hystria" : "Covid got you :["
         // 3
         let label = SKLabelNode(fontNamed: "Chalkduster")
         label.text = message
